@@ -32,7 +32,10 @@
         <activity
             android:name=".MapsTest"
             android:label="@string/title_activity_maps_test" />
-        <activity android:name=".MainMenu">
+        <activity
+            android:name=".MainMenuDrawer"
+            android:label="@string/title_activity_main_menu_drawer"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
