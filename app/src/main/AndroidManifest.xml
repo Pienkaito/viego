@@ -30,9 +30,6 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsTest"
-            android:label="@string/title_activity_maps_test" />
-        <activity
             android:name=".MainMenuDrawer"
             android:label="@string/title_activity_main_menu_drawer"
             android:theme="@style/AppTheme.NoActionBar">
