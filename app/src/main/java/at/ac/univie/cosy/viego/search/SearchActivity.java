@@ -1,13 +1,15 @@
 package at.ac.univie.cosy.viego.search;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
+
+import org.json.JSONException;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -19,13 +21,14 @@ public class SearchActivity extends AppCompatActivity {
 
     ProgressBar nowloading;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
         // Hole mir die progressbar vom view und mach sie unsichtbar.
-        nowloading = (ProgressBar)findViewById(R.id.progressBar);
+        nowloading = (ProgressBar)findViewById(R.id.search_progressbar);
         nowloading.setVisibility(View.GONE);
     }
 
@@ -65,7 +68,7 @@ public class SearchActivity extends AppCompatActivity {
 
     //Following added by Mourni:
 
-    public void onClick(View view) {
+    public void onClick(View view) {  // ERROR HIER WEIL NOCH KEIN SEARCH BUTTON
 
         //Ich mache die Progressbar sichtbar da der Button geklickt wurde
         nowloading.setVisibility(View.VISIBLE);
@@ -110,5 +113,32 @@ public class SearchActivity extends AppCompatActivity {
             }
             return null;
         }
+        @Override
+
+        protected void onPostExecute(String api_response)
+        {
+            super.onPostExecute(api_response);
+            try
+            {
+                // Ich hole mir die Ergebnisse von meiner JSOnHandler Klasse und berechne die Werte für die result activity
+                PlaceInfo[] searchresult = SearchHandler.getPlaceInformation(api_response);
+                )
+
+
+                //Ich speichere die Informationen im internal storage und gebe sie an die ResultActivity weiter.
+                Intent intent = new Intent(getApplicationContext(), SearchResult.class);
+                /*
+                intent.putExtra(CITY_MESSAGE, spinner.getSelectedItem().toString());
+                */
+                //Die Berechnungen sind fertig, deshalb mache ich die Progressbar wieder unsichtbar und rufe die Result Activity auf
+                nowloading.setVisibility(View.GONE);
+                startActivity(intent);
+
+            } catch (JSONException e) // Exception wird gefangen nachdem die konvertierung fehlschlägt
+            {
+               //Error message!
+            }
+        }
+
     }
 }
