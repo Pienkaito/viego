@@ -31,7 +31,7 @@ public class MainMenuDrawerView extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_drawer);
+        setContentView(R.layout.mainmenu_layout_with_nav);
 
         //App Bar init
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -59,7 +59,7 @@ public class MainMenuDrawerView extends AppCompatActivity
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.app_bar_drawer, menu);
+        getMenuInflater().inflate(R.menu.mainmenu_navigation_drawer, menu);
         return true;
     }
 
