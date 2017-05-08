@@ -122,7 +122,6 @@ public class SearchActivity extends AppCompatActivity {
             {
                 // Ich hole mir die Ergebnisse von meiner JSOnHandler Klasse und berechne die Werte für die result activity
                 PlaceInfo[] searchresult = SearchHandler.getPlaceInformation(api_response);
-                )
 
 
                 //Ich speichere die Informationen im internal storage und gebe sie an die ResultActivity weiter.
