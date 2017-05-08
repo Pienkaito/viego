@@ -62,7 +62,7 @@ public class SearchResult extends Activity{
       setContentView(R.layout.activity_search_result);
       listview = (ListView) findViewById(R.id.search_results);
 
-      adapter = new ArrayAdapter<PlaceInfo>(this, android.R.layout.simple_list_item_1, placeresult);
+      //adapter = new ArrayAdapter<PlaceInfo>(this, android.R.layout.simple_list_item_1, placeresult);
       listview.setAdapter(adapter);
 
       listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -12,7 +12,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginRight="6dip"
         android:contentDescription="Image"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/ic_menu_camera" />
 
     <TextView
         android:id="@+id/text_place_description"
