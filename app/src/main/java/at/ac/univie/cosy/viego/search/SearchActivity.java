@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import android.widget.CheckBox;
@@ -30,6 +31,12 @@ public class SearchActivity extends AppCompatActivity {
         // Hole mir die progressbar vom view und mach sie unsichtbar.
         nowloading = (ProgressBar)findViewById(R.id.search_progressbar);
         nowloading.setVisibility(View.GONE);
+
+
+        // Toolbar wird geholt und der Titel der App wird nicht angezeigt
+        Toolbar searchToolbar = (Toolbar) findViewById(R.id.search_toolbar);
+        setSupportActionBar(searchToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     @Override
