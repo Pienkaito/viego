@@ -20,6 +20,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import at.ac.univie.cosy.viego.R;
+
 public class MainMenuDrawerView extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
@@ -59,7 +61,7 @@ public class MainMenuDrawerView extends AppCompatActivity
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.mainmenu_navigation_drawer, menu);
+        getMenuInflater().inflate(R.menu.search_app_bar, menu);
         return true;
     }
 
@@ -108,7 +110,7 @@ public class MainMenuDrawerView extends AppCompatActivity
                 break;
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.mainmenu_drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -129,7 +131,7 @@ public class MainMenuDrawerView extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.mainmenu_drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {

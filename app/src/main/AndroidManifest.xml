@@ -31,7 +31,7 @@
 
         <activity
             android:name=".view.MainMenuDrawerView"
-            android:label="@string/title_activity_main_menu_drawer"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,7 +39,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".search.SearchActivity"></activity>
+        <activity
+            android:name=".search.SearchActivity"
+            android:label="@string/title_activity_search"></activity>
     </application>
 
 </manifest>
