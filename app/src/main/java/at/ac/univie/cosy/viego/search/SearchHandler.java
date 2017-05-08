@@ -38,6 +38,7 @@ String run(String url) throws IOException {
         JSONObject json = new JSONObject(jString);
 
         JSONArray results = json.getJSONArray("results");
+
         PlaceInfo[] returninfo = new PlaceInfo[results.length()];
 
         for (int i =0; i< results.length();i++){
@@ -45,7 +46,8 @@ String run(String url) throws IOException {
             returninfo[i].place_id = results.getJSONObject(i).getString("place_id");
             returninfo[i].formatted_address = results.getJSONObject(i).getString("formatted_address");
             returninfo[i].place_rating = results.getJSONObject(i).getString("rating");
-            returninfo[i].place_img_id = results.getJSONArray("photos").getJSONObject(0).getString("photo_reference");
+
+            returninfo[i].place_img_id = results.getJSONObject(i).getJSONArray("photos").getJSONObject(0).getString("photo_reference");
         }
 
         return returninfo;
