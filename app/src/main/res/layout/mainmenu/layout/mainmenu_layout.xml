@@ -26,12 +26,12 @@
         android:orientation="vertical">
 
         <include
-            layout="@layout/content_drawer"
+            layout="@layout/navigation_drawer_content"
             android:layout_width="match_parent"
             android:layout_height="456dp" />
 
         <include
-            layout="@layout/bottom_bar_drawer"
+            layout="@layout/mainmenu_bottom_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:layout_editor_absoluteX="8dp"
