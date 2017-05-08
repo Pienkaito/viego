@@ -6,9 +6,10 @@ package at.ac.univie.cosy.viego.search;
 
 public class PlaceInfo {
     String place_id;
-   // String img_id;
+    String place_img_id;
     String formatted_address;
     String place_name;
+    String place_rating;
 }
 
 
