@@ -1,5 +1,6 @@
 package at.ac.univie.cosy.viego;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +17,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import at.ac.univie.cosy.viego.search.SearchActivity;
 
 public class MainMenuDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,OnMapReadyCallback {
@@ -97,6 +100,8 @@ public class MainMenuDrawer extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_camera:
+                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivity(intent);
                 break;
             case R.id.nav_gallery:
                 break;
