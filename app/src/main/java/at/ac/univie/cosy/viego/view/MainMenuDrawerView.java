@@ -60,14 +60,6 @@ public class MainMenuDrawerView extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    public void openSearchActivity(View v)
-    {
-        if(v.getId() == R.id.app_bar_search) {
-            Intent intent = new Intent(this, SearchActivity.class);
-            startActivity(intent);
-        }
-    }
-
 
 
     //WIEDER LOESCHEN, nur fuer die Weiterleitung durch Button zur naechsten Activity!!!!!!!!
@@ -99,6 +91,8 @@ public class MainMenuDrawerView extends AppCompatActivity
 
         switch (id) {
             case R.id.app_bar_search:
+                Intent intent = new Intent(this, SearchActivity.class);
+                startActivity(intent);
                 //Enter Search bar things here
                 break;
             default:

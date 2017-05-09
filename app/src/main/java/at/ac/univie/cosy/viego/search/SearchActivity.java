@@ -47,11 +47,11 @@ public class SearchActivity extends AppCompatActivity {
         //android.app.ActionBar actionBar = getActionBar();
         //getActionBar().setCustomView(R.layout.mainmenu_layout);
 
-/*
+
         // Toolbar wird geholt und der Titel der App wird nicht angezeigt d
-        Toolbar searchToolbar = (Toolbar) findViewById(R.id.search_toolbar);
-        setSupportActionBar(searchToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);*/
+        //Toolbar searchToolbar = (Toolbar) findViewById(R.id.search_toolbar);
+        //setSupportActionBar(searchToolbar);
+
     }
 
     @Override
