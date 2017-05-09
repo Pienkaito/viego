@@ -40,11 +40,12 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         // Hole mir die progressbar vom view und mach sie unsichtbar.
-        //nowloading = (ProgressBar)findViewById(R.id.search_progressbar);
+        nowloading = (ProgressBar)findViewById(R.id.search_progressbar);
         nowloading.setVisibility(View.GONE);
 
-        android.app.ActionBar actionBar = getActionBar();
-        getActionBar().setCustomView(R.layout.mainmenu_layout);
+
+        //android.app.ActionBar actionBar = getActionBar();
+        //getActionBar().setCustomView(R.layout.mainmenu_layout);
 
 /*
         // Toolbar wird geholt und der Titel der App wird nicht angezeigt d
@@ -56,6 +57,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         getMenuInflater().inflate(R.menu.search_textfield_appbar, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menuSearch).getActionView();
