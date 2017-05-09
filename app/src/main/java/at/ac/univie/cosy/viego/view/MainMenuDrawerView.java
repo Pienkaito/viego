@@ -1,6 +1,8 @@
 package at.ac.univie.cosy.viego.view;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import at.ac.univie.cosy.viego.R;
+import at.ac.univie.cosy.viego.search.SearchActivity;
 
 public class MainMenuDrawerView extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
@@ -54,6 +58,15 @@ public class MainMenuDrawerView extends AppCompatActivity
         //Navigation Drawer
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    //WIEDER LOESCHEN, nur fuer die Weiterleitung durch Button zur naechsten Activity!!!!!!!!
+    public void buttonClickFunction(View v)
+    {
+        if(v.getId() == R.id.button2) {
+            Intent intent = new Intent(this, SearchActivity.class);
+            startActivity(intent);
+        }
     }
 
     /*

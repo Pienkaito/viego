@@ -4,12 +4,14 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
 
@@ -21,6 +23,12 @@ import okhttp3.Response;
 
 import at.ac.univie.cosy.viego.R;
 
+/**
+ * Dazu gehoerende XML-Files:<br>
+ *     -acitivity_search<br>
+ *     -search_textfield_appbar
+ * @author raphaelkolhaupt, mayerhubert, beringuelmarkanthony
+ */
 public class SearchActivity extends AppCompatActivity {
 
     ProgressBar nowloading;
@@ -32,20 +40,23 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         // Hole mir die progressbar vom view und mach sie unsichtbar.
-        nowloading = (ProgressBar)findViewById(R.id.search_progressbar);
+        //nowloading = (ProgressBar)findViewById(R.id.search_progressbar);
         nowloading.setVisibility(View.GONE);
 
+        android.app.ActionBar actionBar = getActionBar();
+        getActionBar().setCustomView(R.layout.mainmenu_layout);
 
+/*
         // Toolbar wird geholt und der Titel der App wird nicht angezeigt d
         Toolbar searchToolbar = (Toolbar) findViewById(R.id.search_toolbar);
         setSupportActionBar(searchToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);*/
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.search_textfield_app_bar, menu);
+        getMenuInflater().inflate(R.menu.search_textfield_appbar, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menuSearch).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
