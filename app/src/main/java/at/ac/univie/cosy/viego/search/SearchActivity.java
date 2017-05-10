@@ -38,6 +38,7 @@ public class SearchActivity extends AppCompatActivity {
     ProgressBar nowloading;
     String selected_category = null;
     Spinner spinner_radius;
+    public final static String API_CALL_MESSAGE = "API_MESSAGE";
 
 
     @Override
@@ -90,13 +91,13 @@ public class SearchActivity extends AppCompatActivity {
                     String url = null;
 
                     url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
-                            "-33.8670522,151.1957362" +
+                            "48.220071,16.356277" +
                             "&radius=" + spinner_radius.getSelectedItem().toString() +
                             "&type=" + selected_category +
                             "&keyword=" + query +
                             "&key=" + apikey  //AIzaSyAahAPIqHgVnBjMziAK_I8Vce0wmkEycFY
                     ;
-
+                // lat 48.220071   long 16.356277
 
                     //Ich frage bei der API an über den Konstruktor und die execute funktion mit der vollständigen URL als parameter
                     APICallerPlaces places_api = new APICallerPlaces();
@@ -124,6 +125,7 @@ public class SearchActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.checkBox2:
                 if (checked) {
+                    selected_category = "";
 
                 }
                 // Put some meat on the sandwich
@@ -143,15 +145,10 @@ public class SearchActivity extends AppCompatActivity {
         // Cheese me
 
     }
-
-    //Following added by Mourni:
-
-    public void onClick(View view) {  // ERROR HIER WEIL NOCH KEIN SEARCH BUTTON
-
-    }
-
     public class APICallerPlaces extends AsyncTask<String, Void, String> {
         // Ich erstelle einen OkHttp client
+
+
         OkHttpClient client = new OkHttpClient();
 
         @Override
@@ -181,12 +178,10 @@ public class SearchActivity extends AppCompatActivity {
             super.onPostExecute(api_response);
             try
             {
-                // Ich hole mir die Ergebnisse von meiner JSOnHandler Klasse und berechne die Werte für die result activity
-                PlaceInfo[] searchresult = SearchHandler.getPlaceInformation(api_response);
-
 
                 //Ich speichere die Informationen im internal storage und gebe sie an die ResultActivity weiter.
                 Intent intent = new Intent(getApplicationContext(), SearchResult.class);
+                intent.putExtra(API_CALL_MESSAGE, api_response);
                 /*
                 intent.putExtra(CITY_MESSAGE, spinner.getSelectedItem().toString());
                 */
@@ -194,11 +189,18 @@ public class SearchActivity extends AppCompatActivity {
                 nowloading.setVisibility(View.GONE);
                 startActivity(intent);
 
-            } catch (JSONException e) // Exception wird gefangen nachdem die konvertierung fehlschlägt
+            } catch (Exception e) // Exception wird gefangen nachdem die konvertierung fehlschlägt
             {
-               //Error message!
+                //Error message!
             }
         }
 
     }
+
+    //Following added by Mourni:
+/*
+    public void onClick(View view) {  // ERROR HIER WEIL NOCH KEIN SEARCH BUTTON
+
+    }
+*/
 }
