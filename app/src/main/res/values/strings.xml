@@ -14,4 +14,13 @@
     <string name="category_amusement_park">Amusement Park</string>
     <string name="category_church">Church</string>
     <string name="category_museum">Museum</string>
+    <string-array name="radius_array">
+        <item>500</item>
+        <item>1000</item>
+        <item>1500</item>
+        <item>2000</item>
+        <item>2500</item>
+        <item>3000</item>
+    </string-array>
+
 </resources>
