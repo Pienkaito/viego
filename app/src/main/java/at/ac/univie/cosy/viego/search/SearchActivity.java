@@ -100,6 +100,7 @@ public class SearchActivity extends AppCompatActivity {
                 // lat 48.220071   long 16.356277
 
                     //Ich frage bei der API an über den Konstruktor und die execute funktion mit der vollständigen URL als parameter
+                    nowloading.setVisibility(View.VISIBLE);
                     APICallerPlaces places_api = new APICallerPlaces();
                     places_api.execute(url);
 
@@ -125,7 +126,7 @@ public class SearchActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.checkBox2:
                 if (checked) {
-                    selected_category = "";
+                    selected_category = "museum";
 
                 }
                 // Put some meat on the sandwich
@@ -186,7 +187,6 @@ public class SearchActivity extends AppCompatActivity {
                 intent.putExtra(CITY_MESSAGE, spinner.getSelectedItem().toString());
                 */
                 //Die Berechnungen sind fertig, deshalb mache ich die Progressbar wieder unsichtbar und rufe die Result Activity auf
-                nowloading.setVisibility(View.GONE);
                 startActivity(intent);
 
             } catch (Exception e) // Exception wird gefangen nachdem die konvertierung fehlschlägt

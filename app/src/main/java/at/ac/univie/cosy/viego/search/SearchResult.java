@@ -69,16 +69,18 @@ public class SearchResult extends Activity{
       super.onCreate(savedInstanceState);
 
       nowloading = (ProgressBar)findViewById(R.id.search_progressbar);
-      nowloading.setVisibility(View.GONE);
+
 
       Intent intent = getIntent();
       String api_response = intent.getStringExtra(SearchActivity.API_CALL_MESSAGE);
       PlaceInfo[] searchresult =null;
       try{
+          nowloading.setVisibility(View.VISIBLE);
           searchresult = SearchHandler.getPlaceInformation(api_response);
       }
 
       catch (JSONException e){
+          nowloading.setVisibility(View.GONE);
 
       }
       if (searchresult == null)
@@ -89,6 +91,7 @@ public class SearchResult extends Activity{
 
       adapter = new ArrayAdapter<PlaceInfo>(this, android.R.layout.simple_list_item_1, searchresult);
       listview.setAdapter(adapter);
+      nowloading.setVisibility(View.GONE);
 
       listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
           @Override
