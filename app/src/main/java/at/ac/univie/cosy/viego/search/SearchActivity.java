@@ -11,9 +11,12 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -31,7 +34,10 @@ import at.ac.univie.cosy.viego.R;
  */
 public class SearchActivity extends AppCompatActivity {
 
+    String apikey = "AIzaSyAahAPIqHgVnBjMziAK_I8Vce0wmkEycFY";
     ProgressBar nowloading;
+    String selected_category = null;
+    Spinner spinner_radius;
 
 
     @Override
@@ -42,6 +48,13 @@ public class SearchActivity extends AppCompatActivity {
         // Hole mir die progressbar vom view und mach sie unsichtbar.
         nowloading = (ProgressBar)findViewById(R.id.search_progressbar);
         nowloading.setVisibility(View.GONE);
+
+        // Define Spinner, apply spinner adapter to spinner to fill with values form the array
+        spinner_radius = (Spinner) findViewById(R.id.spinner_umkreis);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.radius_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_radius.setAdapter(adapter);
+
 
 
         //android.app.ActionBar actionBar = getActionBar();
@@ -66,7 +79,32 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //TODO write your code what you want to perform on search
+                if (selected_category == null){
+                    Toast.makeText(getBaseContext(),"Please select a category first", Toast.LENGTH_LONG).show();
+
+                }
+                else {
+                    //Ich mache die Progressbar sichtbar da der Button geklickt wurde
+                    nowloading.setVisibility(View.VISIBLE);
+                    // Ich ändere die URL für den API Aufruf basierend auf der User Auswahl
+                    String url = null;
+
+                    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
+                            "-33.8670522,151.1957362" +
+                            "&radius=" + spinner_radius.getSelectedItem().toString() +
+                            "&type=" + selected_category +
+                            "&keyword=" + query +
+                            "&key=" + apikey  //AIzaSyAahAPIqHgVnBjMziAK_I8Vce0wmkEycFY
+                    ;
+
+
+                    //Ich frage bei der API an über den Konstruktor und die execute funktion mit der vollständigen URL als parameter
+                    APICallerPlaces places_api = new APICallerPlaces();
+                    places_api.execute(url);
+
+
+
+                }
                 return true;
             }
             @Override
@@ -109,23 +147,6 @@ public class SearchActivity extends AppCompatActivity {
     //Following added by Mourni:
 
     public void onClick(View view) {  // ERROR HIER WEIL NOCH KEIN SEARCH BUTTON
-
-        //Ich mache die Progressbar sichtbar da der Button geklickt wurde
-        nowloading.setVisibility(View.VISIBLE);
-        // Ich ändere die URL für den API Aufruf basierend auf der User Auswahl
-        String TESTURL = null;
-        //HIER MÜSSEN WIR BERECHNEN WELCHE URL WIR ABSCHICKEN!
-        //
-        //
-        //
-        TESTURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&type=restaurant&keyword=cruise&key=AIzaSyAahAPIqHgVnBjMziAK_I8Vce0wmkEycFY"
-                    ;
-
-
-        //Ich frage bei der API an über den Konstruktor und die execute funktion mit der vollständigen URL als parameter
-        APICallerPlaces places_api = new APICallerPlaces();
-        places_api.execute(TESTURL);
-
 
     }
 
