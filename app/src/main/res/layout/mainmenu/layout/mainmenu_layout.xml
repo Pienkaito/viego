@@ -28,12 +28,13 @@
         </android.support.design.widget.AppBarLayout>
 
         <include
-            layout="@layout/maps_fragment"
+            layout="@layout/mainmenu_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <include
+            android:id="@+id/mainmenu_bottom_content"
             layout="@layout/mainmenu_bottom_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
