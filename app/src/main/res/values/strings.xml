@@ -9,11 +9,11 @@
     <string name="title_activity_search">Search</string>
 
     <string name="category_title">Categories</string>
-    <string name="category_aquarium">Aquarium</string>
-    <string name="category_art_gallery">Art Gallery</string>
-    <string name="category_amusement_park">Amusement Park</string>
-    <string name="category_church">Church</string>
-    <string name="category_museum">Museum</string>
+    <string name="radio_sight">Sight</string>
+    <string name="radio_art_gallery">Art Gallery</string>
+    <string name="radio_cafe">Cafe</string>
+    <string name="radio_church">Church</string>
+    <string name="radio_museum">Museum</string>
     <string name="search_radius">Search radius</string>
     <string-array name="radius_array">
         <item>500</item>

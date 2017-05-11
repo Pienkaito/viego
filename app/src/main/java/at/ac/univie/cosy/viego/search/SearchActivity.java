@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class SearchActivity extends AppCompatActivity {
     String apikey = "AIzaSyAahAPIqHgVnBjMziAK_I8Vce0wmkEycFY";
     ProgressBar nowloading;
     String selected_category = null;
+    //TODO THIS MAYBE STATIC OR SMTH? SO IT GOES BACK TO NULL HERE ? IDK
     Spinner spinner_radius;
     public final static String API_CALL_MESSAGE = "API_MESSAGE";
 
@@ -55,7 +57,6 @@ public class SearchActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.radius_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_radius.setAdapter(adapter);
-
 
 
         //android.app.ActionBar actionBar = getActionBar();
@@ -80,32 +81,64 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if (selected_category == null){
-                    Toast.makeText(getBaseContext(),"Please select a category first", Toast.LENGTH_LONG).show();
+                String url = null;
 
+                //QUERY
+                if (query != null){
+                    //QUERY + CAT
+                    if (selected_category != null) {
+                        //Ich mache die Progressbar sichtbar da der Button geklickt wurde
+                        nowloading.setVisibility(View.VISIBLE);
+                        // Ich ändere die URL für den API Aufruf basierend auf der User Auswahl
+                        url = null;
+
+                        url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?rankby=distance&location=" +
+                                "48.220071,16.356277" +
+                                "&radius=" + spinner_radius.getSelectedItem().toString() +
+                                "&type=" + selected_category +
+                                "&keyword=" + query +
+                                "&key=" + apikey  //AIzaSyAahAPIqHgVnBjMziAK_I8Vce0wmkEycFY
+                        ;
+                        // lat 48.220071   long 16.356277
+                    }
+
+                    // NO CATEGORY
+                    else
+                    {
+                            url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?rankby=distance&location=" +
+                                    "48.220071,16.356277" +
+                                    "&radius=" + spinner_radius.getSelectedItem().toString() +
+                                    //"&type=" + selected_category +
+                                    "&keyword=" + query +
+                                    "&key=" + apikey  //AIzaSyAahAPIqHgVnBjMziAK_I8Vce0wmkEycFY
+                                    ;
+                    }
                 }
-                else {
-                    //Ich mache die Progressbar sichtbar da der Button geklickt wurde
-                    nowloading.setVisibility(View.VISIBLE);
-                    // Ich ändere die URL für den API Aufruf basierend auf der User Auswahl
-                    String url = null;
+                // NO QUERY
+               else {
+                    if (selected_category != null)
+                    //CATGORY
+                    {
+                            url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?rankby=distance&location=" +
+                                    "48.220071,16.356277" +
+                                    "&radius=" + spinner_radius.getSelectedItem().toString() +
+                                    "&type=" + selected_category +
+                                    //"&keyword=" + query +
+                                    "&key=" + apikey  //AIzaSyAahAPIqHgVnBjMziAK_I8Vce0wmkEycFY
+                                    ;
 
-                    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
-                            "48.220071,16.356277" +
-                            "&radius=" + spinner_radius.getSelectedItem().toString() +
-                            "&type=" + selected_category +
-                            "&keyword=" + query +
-                            "&key=" + apikey  //AIzaSyAahAPIqHgVnBjMziAK_I8Vce0wmkEycFY
-                    ;
-                // lat 48.220071   long 16.356277
-
+                    }
+                        //NO QUERY NO CAT
+                    if (query == null && selected_category == null)
+                        url= null;
+                        Toast.makeText(getBaseContext(), "Please enter a search term or choose a category", Toast.LENGTH_LONG).show();
+                }
                     //Ich frage bei der API an über den Konstruktor und die execute funktion mit der vollständigen URL als parameter
+
+                if (url != null) {
                     nowloading.setVisibility(View.VISIBLE);
                     APICallerPlaces places_api = new APICallerPlaces();
                     places_api.execute(url);
-
-
-
                 }
                 return true;
             }
@@ -118,33 +151,34 @@ public class SearchActivity extends AppCompatActivity {
         return true;
     }
 
-    public void onCheckboxClicked(View view) {
-        // Is the view now checked?
-        boolean checked = ((CheckBox) view).isChecked();
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
 
-        // Check which checkbox was clicked
-        switch (view.getId()) {
-            case R.id.checkBox2:
-                if (checked) {
-                    selected_category = "museum";
-
-                }
-                // Put some meat on the sandwich
-                else
-                    // Remove the meat
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radio_art_gallery:
+                if (checked)
+                    selected_category = "art_gallery";
                     break;
-            case R.id.checkBox3:
-                if (checked) {
+            case R.id.radio_cafe:
+                if (checked)
+                    selected_category = "cafe";
+                    break;
+            case R.id.radio_church:
+                if (checked)
+                    selected_category = "church";
+                    break;
+            case R.id.radio_sight:
+                if (checked)
+                    selected_category = "sight";
+                    break;
 
-                } else {
-                    //asdf
-                }
-                // I'm lactose intolerant
-                break;
-            // TODO: Veggie sandwich
+            case R.id.radio_museum:
+                if (checked)
+                    selected_category = "museum";
+                    break;
         }
-        // Cheese me
-
     }
     public class APICallerPlaces extends AsyncTask<String, Void, String> {
         // Ich erstelle einen OkHttp client
