@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -42,6 +43,8 @@ public class SearchActivity extends AppCompatActivity {
     Spinner spinner_radius;
     public final static String API_CALL_MESSAGE = "API_MESSAGE";
 
+    public static final String TAG = "Main Activity Log";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +52,8 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         // Hole mir die progressbar vom view und mach sie unsichtbar.
-        nowloading = (ProgressBar)findViewById(R.id.search_progressbar);
-        nowloading.setVisibility(View.GONE);
+       nowloading = (ProgressBar)findViewById(R.id.search_progressbar);
+       nowloading.setVisibility(View.GONE);
 
         // Define Spinner, apply spinner adapter to spinner to fill with values form the array
         spinner_radius = (Spinner) findViewById(R.id.spinner_umkreis);
@@ -88,7 +91,7 @@ public class SearchActivity extends AppCompatActivity {
                     //QUERY + CAT
                     if (selected_category != null) {
                         //Ich mache die Progressbar sichtbar da der Button geklickt wurde
-                        nowloading.setVisibility(View.VISIBLE);
+                       // nowloading.setVisibility(View.VISIBLE);
                         // Ich ändere die URL für den API Aufruf basierend auf der User Auswahl
                         url = null;
 
@@ -115,6 +118,7 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 }
                 // NO QUERY
+                /*
                else {
                     if (selected_category != null)
                     //CATGORY
@@ -134,9 +138,9 @@ public class SearchActivity extends AppCompatActivity {
                         Toast.makeText(getBaseContext(), "Please enter a search term or choose a category", Toast.LENGTH_LONG).show();
                 }
                     //Ich frage bei der API an über den Konstruktor und die execute funktion mit der vollständigen URL als parameter
-
+*/
                 if (url != null) {
-                    nowloading.setVisibility(View.VISIBLE);
+                    // TODO nowloading.setVisibility(View.VISIBLE);
                     APICallerPlaces places_api = new APICallerPlaces();
                     places_api.execute(url);
                 }
@@ -181,8 +185,6 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
     public class APICallerPlaces extends AsyncTask<String, Void, String> {
-        // Ich erstelle einen OkHttp client
-
 
         OkHttpClient client = new OkHttpClient();
 
@@ -202,6 +204,8 @@ public class SearchActivity extends AppCompatActivity {
 
             } catch (Exception e) //Exception if call fails.
             {
+                Log.e(TAG, "API Call for String failed");
+                Log.e(TAG, e.getMessage());
                 //print error message
             }
             return null;
@@ -217,14 +221,14 @@ public class SearchActivity extends AppCompatActivity {
                 //Ich speichere die Informationen im internal storage und gebe sie an die ResultActivity weiter.
                 Intent intent = new Intent(getApplicationContext(), SearchResult.class);
                 intent.putExtra(API_CALL_MESSAGE, api_response);
-                /*
-                intent.putExtra(CITY_MESSAGE, spinner.getSelectedItem().toString());
-                */
+
                 //Die Berechnungen sind fertig, deshalb mache ich die Progressbar wieder unsichtbar und rufe die Result Activity auf
                 startActivity(intent);
 
             } catch (Exception e) // Exception wird gefangen nachdem die konvertierung fehlschlägt
             {
+                Log.e(TAG, "put INTENT FAILED");
+                Log.e(TAG, e.getMessage());
                 //Error message!
             }
         }

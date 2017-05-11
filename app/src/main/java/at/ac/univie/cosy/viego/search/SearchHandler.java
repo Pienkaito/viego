@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 /**
  * Created by Mourni on 5/6/2017.
  */
@@ -33,14 +35,29 @@ String run(String url) throws IOException {
   return response.body().string();
 }
     */
-    public static PlaceInfo[] getPlaceInformation (String jString) throws JSONException
+    public static List<PlaceInfo> getPlaceInformation (String jString) throws JSONException
     {
+
         JSONObject json = new JSONObject(jString);
 
         JSONArray results = json.getJSONArray("results");
 
-        PlaceInfo[] returninfo = new PlaceInfo[results.length()];
 
+
+        PlaceInfo nextitem = new PlaceInfo();
+        List<PlaceInfo> returninfo = null;
+
+        for (int i=0; i< results.length(); i++){
+            nextitem.place_name = results.getJSONObject(i).getString("name");
+            nextitem.place_id = results.getJSONObject(i).getString("place_id");
+            nextitem.formatted_address = results.getJSONObject(i).getString("formatted_address");
+            nextitem.place_rating = results.getJSONObject(i).getString("rating");
+            nextitem.place_img_id = results.getJSONObject(i).getJSONArray("photos").getJSONObject(0).getString("photo_reference");
+
+            returninfo.add(nextitem);
+        }
+        /*
+        PlaceInfo[] returninfo = new PlaceInfo[results.length()];
         for (int i =0; i< results.length();i++){
             returninfo[i].place_name = results.getJSONObject(i).getString("name");
             returninfo[i].place_id = results.getJSONObject(i).getString("place_id");
@@ -49,7 +66,7 @@ String run(String url) throws IOException {
 
             returninfo[i].place_img_id = results.getJSONObject(i).getJSONArray("photos").getJSONObject(0).getString("photo_reference");
         }
-
+        */
         return returninfo;
     }
 
