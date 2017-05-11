@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -44,15 +45,16 @@ String run(String url) throws IOException {
 
 
 
-        PlaceInfo nextitem = new PlaceInfo();
-        List<PlaceInfo> returninfo = null;
+
+        List<PlaceInfo> returninfo = new LinkedList<>();
 
         for (int i=0; i< results.length(); i++){
+			PlaceInfo nextitem = new PlaceInfo();
             nextitem.place_name = results.getJSONObject(i).getString("name");
             nextitem.place_id = results.getJSONObject(i).getString("place_id");
-            nextitem.formatted_address = results.getJSONObject(i).getString("formatted_address");
-            nextitem.place_rating = results.getJSONObject(i).getString("rating");
-            nextitem.place_img_id = results.getJSONObject(i).getJSONArray("photos").getJSONObject(0).getString("photo_reference");
+            nextitem.formatted_address = results.getJSONObject(i).getString("vicinity");
+           // nextitem.place_rating = results.getJSONObject(i).getString("rating");
+           // nextitem.place_img_id = results.getJSONObject(i).getJSONArray("photos").getJSONObject(0).getString("photo_reference");
 
             returninfo.add(nextitem);
         }

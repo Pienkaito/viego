@@ -35,9 +35,7 @@ import okhttp3.Response;
 public class SearchResult extends Activity{
 
     // to add:  kurzer code damit die placeresults aus dem API call an diese class weitergegeben werden.
-    public final static String CITY_MESSAGE = "Stadt";
     ListView listview;
-    ArrayAdapter<PlaceInfo> adapter;
     //ProgressBar nowloading;
     public static final String TAG = "Main Activity Log";
 
@@ -46,46 +44,40 @@ public class SearchResult extends Activity{
       super.onCreate(savedInstanceState);
 
       //nowloading = (ProgressBar)findViewById(R.id.search_progressbar);
-
-
+	  setContentView(R.layout.activity_search_result);
       Intent intent = getIntent();
-      String api_response = intent.getStringExtra(SearchActivity.API_CALL_MESSAGE);
-      Log.i(TAG, "API wurde aufgerufen!");
-      Log.i(TAG, api_response);
-      List<PlaceInfo> searchresult =null;
-      try{
-         // nowloading.setVisibility(View.VISIBLE);
-          searchresult = SearchHandler.getPlaceInformation(api_response);
-      }
+	  try {
+		  String api_response = intent.getStringExtra(SearchActivity.API_CALL_MESSAGE);
+		  Log.i(TAG, "API wurde aufgerufen!");
+		  Log.i(TAG, api_response);
+		  List<PlaceInfo> searchresult = SearchHandler.getPlaceInformation(api_response);
 
+		  if (searchresult == null)
+			  return;
+
+		  listview = (ListView) findViewById(R.id.search_results);
+
+		  SearchAdapter adapter = new SearchAdapter(this, android.R.layout.simple_list_item_1, searchresult);
+		  listview.setAdapter(adapter);
+		  listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			  @Override
+			  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+
+				  Toast.makeText(getBaseContext(),parent.getItemAtPosition(position)+"is selected", Toast.LENGTH_LONG).show();
+			  }
+		  });
+
+	  }
       catch (JSONException e){
         //  nowloading.setVisibility(View.GONE);
           Log.e(TAG, "JSON Konvertierung failed");
           Log.e(TAG, e.getMessage());
       }
-     // if (searchresult == null)
-       //   return;
-
-      setContentView(R.layout.activity_search_result);
-
-// get data from the table by the ListAdapter
-      //ListAdapter customAdapter = new ListAdapter(this, R.layout.itemlistrow, List<yourItem>);
-
-      listview = (ListView) findViewById(R.id.search_results);
-
-      SearchAdapter adapter = new SearchAdapter(this, android.R.layout.simple_list_item_1, searchresult);
-      listview.setAdapter(adapter);
      // nowloading.setVisibility(View.GONE);
 
-      listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-          @Override
-          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
-
-              Toast.makeText(getBaseContext(),parent.getItemAtPosition(position)+"is selected", Toast.LENGTH_LONG).show();
-          }
-      });
 
   }
 

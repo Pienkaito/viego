@@ -95,7 +95,7 @@ public class SearchActivity extends AppCompatActivity {
                         // Ich ändere die URL für den API Aufruf basierend auf der User Auswahl
                         url = null;
 
-                        url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?rankby=distance&location=" +
+                        url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?&location=" +
                                 "48.220071,16.356277" +
                                 "&radius=" + spinner_radius.getSelectedItem().toString() +
                                 "&type=" + selected_category +
@@ -108,7 +108,7 @@ public class SearchActivity extends AppCompatActivity {
                     // NO CATEGORY
                     else
                     {
-                            url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?rankby=distance&location=" +
+                            url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?&location=" +
                                     "48.220071,16.356277" +
                                     "&radius=" + spinner_radius.getSelectedItem().toString() +
                                     //"&type=" + selected_category +
@@ -141,6 +141,7 @@ public class SearchActivity extends AppCompatActivity {
 */
                 if (url != null) {
                     // TODO nowloading.setVisibility(View.VISIBLE);
+					Log.i(TAG, "I sent"+url);
                     APICallerPlaces places_api = new APICallerPlaces();
                     places_api.execute(url);
                 }

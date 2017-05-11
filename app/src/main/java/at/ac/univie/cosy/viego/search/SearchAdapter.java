@@ -42,8 +42,8 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 		PlaceInfo p = getItem(position);
 
 		if (p != null) {
-			TextView place_description = (TextView) convertView.findViewById(R.id.text_place_description);
-			TextView place_name = (TextView) convertView.findViewById(R.id.text_place_name);
+			TextView place_description = (TextView) v.findViewById(R.id.text_place_description);
+			TextView place_name = (TextView) v.findViewById(R.id.text_place_name);
 
 				place_name.setText(p.place_name);
 				place_description.setText(p.formatted_address);
