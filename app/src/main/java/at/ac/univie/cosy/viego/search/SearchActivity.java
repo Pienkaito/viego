@@ -11,6 +11,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -45,11 +46,13 @@ public class SearchActivity extends AppCompatActivity {
 
     public static final String TAG = "Main Activity Log";
 
+	android.app.ActionBar actionBar = getActionBar();					//ADDED THIS last
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+		actionBar.setDisplayHomeAsUpEnabled(true);					// ADDED THIS last
 
         // Hole mir die progressbar vom view und mach sie unsichtbar.
        nowloading = (ProgressBar)findViewById(R.id.search_progressbar);
@@ -71,6 +74,22 @@ public class SearchActivity extends AppCompatActivity {
         //setSupportActionBar(searchToolbar);
 
     }
+
+
+
+
+	@Override
+
+	public boolean onOptionsItemSelected (MenuItem item){
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				// app icon in action bar clicked; goto parent activity.
+				this.finish();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
