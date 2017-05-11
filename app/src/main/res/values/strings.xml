@@ -10,6 +10,7 @@
     <string name="title_activity_searchresult">Search Result</string>
 
     <string name="category_title">Categories</string>
+    <string name="radio_all">Show all</string>
     <string name="radio_sight">Sight</string>
     <string name="radio_art_gallery">Art Gallery</string>
     <string name="radio_cafe">Cafe</string>
@@ -24,5 +25,13 @@
         <item>2500</item>
         <item>3000</item>
     </string-array>
+
+    <string name="about_text">This app has been programmed by:</string>
+    <string name="about_mayer" >Hubert Mayer</string>
+    <string name="about_beringuel" >Mark Anthony Beringuel</string>
+    <string name="about_kolhaupt" >Raphael Kolhaupt</string>
+    <string name="about_assistance">with assistance from</string>
+    <string name="about_diensthuber" >Maria Diensthuber</string>
+    <string name="pref_format">km</string>
 
 </resources>

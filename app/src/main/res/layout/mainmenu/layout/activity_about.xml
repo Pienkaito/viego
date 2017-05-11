@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  android:orientation="vertical"
+			  android:layout_width="match_parent"
+			  android:layout_height="match_parent">
+
+	<TextView
+		android:id="@+id/about_programmed"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/about_text"
+		android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+
+	<TextView
+		android:id="@+id/about_mayer"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/about_mayer"
+		android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+
+	<TextView
+		android:id="@+id/about_kolhaupt"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/about_kolhaupt"
+		android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+
+	<TextView
+		android:id="@+id/about_mark"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/about_beringuel"
+		android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+
+	<TextView
+		android:id="@+id/about_assistance"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/about_assistance"
+		android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+
+	<TextView
+		android:id="@+id/about_diensthuber"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/about_diensthuber"
+		android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+
+</LinearLayout>
