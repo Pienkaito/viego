@@ -241,7 +241,7 @@ public class MainMenuActivity extends AppCompatActivity
 		String longitude = "16.353041";
 
 		url = "https://en.wikipedia.org/w/api.php?" + "action=query&format==json&list=geosearch&titles=" +
-				titleOfstandort + "&gscoord=" + longitude + "|" + &gsradius=10000&gslimit=10"
+				titleOfstandort + "&gscoord=" + latitude + "|" + longitude + "&gsradius=10000&gslimit=10"
 		;
 
 			//Hide Bottom
