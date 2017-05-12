@@ -103,7 +103,7 @@
 					android:layout_height="wrap_content"
 					android:onClick="onRadioButtonClicked"
 					android:checked="true"
-					android:text="@string/radio_ALL"
+					android:text="@string/radio_all"
 					tools:layout_editor_absoluteX="171dp"
 					tools:layout_editor_absoluteY="219dp"/>
 
