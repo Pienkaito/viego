@@ -34,7 +34,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.List;
 
+import at.ac.univie.cosy.viego.AboutActivity;
 import at.ac.univie.cosy.viego.R;
+import at.ac.univie.cosy.viego.SettingsActivity;
 import at.ac.univie.cosy.viego.search.SearchActivity;
 
 /**
@@ -248,10 +250,12 @@ public class MainMenuDrawerView extends AppCompatActivity
 				//Start Tour
 				break;
 			case R.id.nav_003:
-				//Settings
+				Intent intent_settings = new Intent(this, SettingsActivity.class);
+				startActivity(intent_settings);
 				break;
 			case R.id.nav_004:
-				//About
+				Intent intent_about = new Intent(this, AboutActivity.class);
+				startActivity(intent_about);
 				break;
 			default:
 				break;
