@@ -226,7 +226,7 @@ public class MainMenuActivity extends AppCompatActivity
 
 		//Hide Bottom
 		bottom_content = (LinearLayout) findViewById(R.id.mainmenu_bottom_content);
-		bottom_content.setVisibility(View.VISIBLE);
+		bottom_content.setVisibility(View.GONE);
 	}
 
 	@Override
