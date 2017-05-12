@@ -50,23 +50,25 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 			TextView place_description = (TextView) v.findViewById(R.id.text_place_description);
 			TextView place_name = (TextView) v.findViewById(R.id.text_place_name);
 
-				place_name.setText(p.place_name);
-				place_description.setText(p.formatted_address);
+			place_name.setText(p.place_name);
+			place_description.setText(p.formatted_address);
 
 			Button button = (Button) v.findViewById(R.id.list_button_add);
 			button.setTag(position);
-			button.setOnClickListener(new View.OnClickListener(){
+			button.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					int position =(Integer) view.getTag();
+					int position = (Integer) view.getTag();
 					PlaceInfo objectinfo = getItem(position);
 					tourPlaceInfos.add(objectinfo);
-					Toast.makeText(getContext(),"You clicked a button yay", Toast.LENGTH_LONG).show();
+					Toast.makeText(getContext(), "You clicked a button yay", Toast.LENGTH_LONG).show();
 
 				}
 
-		});
+			});
 
+
+		}
 		return v;
 	}
 
