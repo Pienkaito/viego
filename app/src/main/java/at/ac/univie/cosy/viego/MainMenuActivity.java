@@ -1,10 +1,11 @@
-package at.ac.univie.cosy.viego.view;
+package at.ac.univie.cosy.viego;
 
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -34,6 +35,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
 import java.util.List;
@@ -82,23 +84,21 @@ import at.ac.univie.cosy.viego.search.SearchActivity;
  *
  * @author raphaelkolhaupt, mayerhubert, beringuelmarkanthony
  */
-public class MainMenuDrawerView extends AppCompatActivity
+public class MainMenuActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener,
 		OnMapReadyCallback,
 		View.OnClickListener {
 
-	public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 	private static final float minZoomFactor = 15.0f;
 	private static final float maxZoomFactor = 18.0f;
 	private GoogleMap gMap;
 	private LatLng curcoord = new LatLng(48.208456, 16.373130);
-	private LocationManager locationManager;
-	private LocationListener locationListener;
+	private LinearLayout bottom_content;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.mainmenu_layout_with_nav);
+		setContentView(R.layout.mainmenu_layout);
 
 		//App Bar init
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -121,6 +121,7 @@ public class MainMenuDrawerView extends AppCompatActivity
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.gmap);
 		mapFragment.getMapAsync(this);
+		/*
 		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 		locationListener = new LocationListener() {
 			@Override
@@ -137,7 +138,7 @@ public class MainMenuDrawerView extends AppCompatActivity
 					gMap.addMarker(new MarkerOptions()
 							.position(latLng)
 							.title(str)
-							.icon(BitmapDescriptorFactory.fromResource(R.drawable.common_full_open_on_phone))
+							.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_menu_send))
 					);
 					gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, maxZoomFactor));
 				} catch (IOException e) {
@@ -185,7 +186,7 @@ public class MainMenuDrawerView extends AppCompatActivity
 							@Override
 							public void onClick(DialogInterface dialogInterface, int i) {
 								//Prompt the user once explanation has been shown
-								ActivityCompat.requestPermissions(MainMenuDrawerView.this,
+								ActivityCompat.requestPermissions(MainMenuActivity.this,
 										new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
 										MY_PERMISSIONS_REQUEST_LOCATION);
 							}
@@ -205,7 +206,7 @@ public class MainMenuDrawerView extends AppCompatActivity
 				ActivityCompat.requestPermissions(this,
 						new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
 						MY_PERMISSIONS_REQUEST_LOCATION);
-			}*/
+			}
 
 		}
 
@@ -214,6 +215,7 @@ public class MainMenuDrawerView extends AppCompatActivity
 		} else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 		}
+		*/
 
 		//Navigation Drawer
 		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -221,6 +223,10 @@ public class MainMenuDrawerView extends AppCompatActivity
 
 		FloatingActionButton myFab = (FloatingActionButton) findViewById(R.id.gps_btn);
 		myFab.setOnClickListener(this);
+
+		//Hide Bottom
+		bottom_content = (LinearLayout) findViewById(R.id.mainmenu_bottom_content);
+		bottom_content.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -320,11 +326,20 @@ public class MainMenuDrawerView extends AppCompatActivity
 			.title("Viiiiiiii")
 			.icon(BitmapDescriptorFactory.fromResource(R.drawable.common_full_open_on_phone))
 		);
-		gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curcoord,maxZoomFactor));
 		*/
-		//gMap.setMinZoomPreference(minZoomFactor);
-		//gMap.setMaxZoomPreference(maxZoomFactor);
+		gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curcoord, maxZoomFactor));
+		gMap.setMinZoomPreference(minZoomFactor);
+		gMap.setMaxZoomPreference(maxZoomFactor);
 		gMap.setBuildingsEnabled(false);
+
+		gMap.addPolyline(new PolylineOptions().add(
+				curcoord,
+				new LatLng(48.207602, 16.373008),
+				new LatLng(48.206741, 16.373515)
+				)
+						.width(10)
+						.color(Color.RED)
+		);
 	}
 
 	/*
