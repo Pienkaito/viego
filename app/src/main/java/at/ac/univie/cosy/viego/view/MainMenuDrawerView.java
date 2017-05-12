@@ -12,23 +12,25 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -85,11 +87,11 @@ public class MainMenuDrawerView extends AppCompatActivity
 		OnMapReadyCallback,
 		View.OnClickListener {
 
+	public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 	private static final float minZoomFactor = 15.0f;
 	private static final float maxZoomFactor = 18.0f;
 	private GoogleMap gMap;
 	private LatLng curcoord = new LatLng(48.208456, 16.373130);
-	public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 	private LocationManager locationManager;
 	private LocationListener locationListener;
 
@@ -164,16 +166,22 @@ public class MainMenuDrawerView extends AppCompatActivity
 
 		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 			// Should we show an explanation?
-			if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+			/*if (ActivityCompat.shouldShowRequestPermissionRationale(this,
 					Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+				LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+
+				View layout = inflater.inflate(R.layout.dialog_form, (ViewGroup) findViewById(R.id.llid));
+				//layout_root should be the name of the "top-level" layout node in the dialog_layout.xml file.
+				final EditText txtFB = (EditText) layout.findViewById(R.id.txtFB);
 
 				// Show an explanation to the user *asynchronously* -- don't block
 				// this thread waiting for the user's response! After the user
 				// sees the explanation, try again to request the permission.
-				new AlertDialog.Builder(this)
-						.setTitle("Location Permission Needed")
-						.setMessage("This app needs the Location permission, please accept to use location functionality")
-						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+						builder.setTitle("Location Permission Needed");
+						builder.setMessage("This app needs the Location permission, please accept to use location functionality");
+						builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialogInterface, int i) {
 								//Prompt the user once explanation has been shown
@@ -181,9 +189,15 @@ public class MainMenuDrawerView extends AppCompatActivity
 										new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
 										MY_PERMISSIONS_REQUEST_LOCATION);
 							}
-						})
-						.create()
-						.show();
+						});
+						builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								dialog.dismiss();
+							}
+						});
+						AlertDialog dialog = builder.create();
+						dialog.show();
 
 
 			} else {
@@ -191,7 +205,7 @@ public class MainMenuDrawerView extends AppCompatActivity
 				ActivityCompat.requestPermissions(this,
 						new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
 						MY_PERMISSIONS_REQUEST_LOCATION);
-			}
+			}*/
 
 		}
 
