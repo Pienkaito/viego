@@ -50,6 +50,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:text="Add"/>
+        android:text="Add"
+        android:onClick="ListClickHandler"/>
 
 </RelativeLayout>

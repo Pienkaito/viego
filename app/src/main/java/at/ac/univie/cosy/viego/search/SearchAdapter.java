@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,18 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 
 		}
 
+		Button button = (Button) convertView.findViewById(R.id.list_button_add);
+		button.setTag(position);
+		button.setOnClickListener(new View.OnClickListener(){
+			@Override
+			public void onClick(View view) {
+				int position =(Integer) view.getTag();
+				PlaceInfo objectinfo = getItem(position);
+				Toast.makeText(getContext(),"You clicked a button yay", Toast.LENGTH_LONG).show();
+
+			}
+
+		});
 
 		return v;
 	}
@@ -63,17 +76,6 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 /*
 
 
-        Button button = (Button) convertView.findViewById(R.id.add_button);
-        button.setTag(position);
-        button.setOnClickListener(new View.OnClickListener(){
-		@Override
-		public void onClick(View view) {
-		int position =(Integer) view.getTag();
-		PlaceInfo objectinfo = getItem(position);
-
-		}
-
-        });
 
         // Return the completed view to render on screen
         return convertView;

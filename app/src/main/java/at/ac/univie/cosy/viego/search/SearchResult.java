@@ -59,15 +59,13 @@ public class SearchResult extends Activity{
 
 		  SearchAdapter adapter = new SearchAdapter(this, android.R.layout.simple_list_item_1, searchresult);
 		  listview.setAdapter(adapter);
-		  listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		 /* listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			  @Override
 			  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
-
 				  Toast.makeText(getBaseContext(),parent.getItemAtPosition(position)+"is selected", Toast.LENGTH_LONG).show();
 			  }
-		  });
+		  });*/
 
 	  }
       catch (JSONException e){
@@ -80,6 +78,7 @@ public class SearchResult extends Activity{
 
 
   }
+
 
 
 
