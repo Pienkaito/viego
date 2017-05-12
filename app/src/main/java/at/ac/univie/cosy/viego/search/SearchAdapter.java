@@ -1,18 +1,30 @@
 package at.ac.univie.cosy.viego.search;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import at.ac.univie.cosy.viego.R;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by Mourni on 07.05.2017.
@@ -23,6 +35,7 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 
 	//TO-DO zu diesem Array sollten die Namen hinzugefuegt werden, die durch Klick auf den Add Button zur Tour
 	//hinzugefuegt werden sollten
+	public final static String apikey = "AIzaSyAahAPIqHgVnBjMziAK_I8Vce0wmkEycFY";
 	ArrayList<PlaceInfo> tourPlaceInfos = new ArrayList<PlaceInfo>();
 
 	public SearchAdapter(Context context, int textViewResourceId) {
@@ -50,6 +63,16 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 			TextView place_description = (TextView) v.findViewById(R.id.text_place_description);
 			TextView place_name = (TextView) v.findViewById(R.id.text_place_name);
 
+			// wenn es ein Bild gibt, lade es herunter!
+			if (p.place_img_id != null) {
+				new DownloadImageTask((ImageView) v.findViewById(R.id.img_place))
+						.execute("https://maps.googleapis.com/maps/api/place/photo?" +
+								"maxheight=200&" +
+								"maxwidth=200&" +
+								"photoreference=" + p.place_img_id +
+								"&key=" + apikey
+						);
+			}
 			place_name.setText(p.place_name);
 			place_description.setText(p.formatted_address);
 
@@ -71,6 +94,32 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 		}
 		return v;
 	}
+
+	private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+		ImageView bmImage;
+
+		private DownloadImageTask(ImageView bmImage) {
+			this.bmImage = bmImage;
+		}
+
+		protected Bitmap doInBackground(String... urls) {
+			String urldisplay = urls[0];
+			Bitmap mIcon11 = null;
+			try {
+				InputStream in = new java.net.URL(urldisplay).openStream();
+				mIcon11 = BitmapFactory.decodeStream(in);
+			} catch (Exception e) {
+				Log.e("Error", e.getMessage());
+				e.printStackTrace();
+			}
+			return mIcon11;
+		}
+
+		protected void onPostExecute(Bitmap result) {
+			bmImage.setImageBitmap(result);
+		}
+	}
+
 
 }
 
