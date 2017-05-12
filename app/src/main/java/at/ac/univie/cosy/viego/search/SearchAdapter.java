@@ -35,9 +35,9 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 		View v = convertView;
 
 		if (v == null) {
-			LayoutInflater vi;
-			vi = LayoutInflater.from(getContext());
-			v = vi.inflate(R.layout.list_item_place, null);
+			LayoutInflater inflater;
+			inflater = LayoutInflater.from(getContext());
+			v = inflater.inflate(R.layout.list_item_place, null);
 		}
 
 		PlaceInfo p = getItem(position);
@@ -49,25 +49,20 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 				place_name.setText(p.place_name);
 				place_description.setText(p.formatted_address);
 
-			//if (tt2 != null) {
-			//	tt2.setText(p.getCategory().getId());
-			//}
+			Button button = (Button) v.findViewById(R.id.list_button_add);
+			button.setTag(position);
+			button.setOnClickListener(new View.OnClickListener(){
+				@Override
+				public void onClick(View view) {
+					int position =(Integer) view.getTag();
+					PlaceInfo objectinfo = getItem(position);
+					Toast.makeText(getContext(),"You clicked a button yay", Toast.LENGTH_LONG).show();
+
+				}
+
+			});
 
 		}
-
-		Button button = (Button) convertView.findViewById(R.id.list_button_add);
-		button.setTag(position);
-		button.setOnClickListener(new View.OnClickListener(){
-			@Override
-			public void onClick(View view) {
-				int position =(Integer) view.getTag();
-				PlaceInfo objectinfo = getItem(position);
-				Toast.makeText(getContext(),"You clicked a button yay", Toast.LENGTH_LONG).show();
-
-			}
-
-		});
-
 		return v;
 	}
 
