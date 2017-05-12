@@ -1,6 +1,8 @@
 package at.ac.univie.cosy.viego.view;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -87,6 +89,7 @@ public class MainMenuDrawerView extends AppCompatActivity
 	private static final float maxZoomFactor = 18.0f;
 	private GoogleMap gMap;
 	private LatLng curcoord = new LatLng(48.208456, 16.373130);
+	public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 	private LocationManager locationManager;
 	private LocationListener locationListener;
 
@@ -158,15 +161,38 @@ public class MainMenuDrawerView extends AppCompatActivity
 			}
 		};
 
+
 		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-			// TODO: Consider calling
-			//    ActivityCompat#requestPermissions
-			// here to request the missing permissions, and then overriding
-			//   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-			//                                          int[] grantResults)
-			// to handle the case where the user grants the permission. See the documentation
-			// for ActivityCompat#requestPermissions for more details.
-			return;
+			// Should we show an explanation?
+			if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+					Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+				// Show an explanation to the user *asynchronously* -- don't block
+				// this thread waiting for the user's response! After the user
+				// sees the explanation, try again to request the permission.
+				new AlertDialog.Builder(this)
+						.setTitle("Location Permission Needed")
+						.setMessage("This app needs the Location permission, please accept to use location functionality")
+						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialogInterface, int i) {
+								//Prompt the user once explanation has been shown
+								ActivityCompat.requestPermissions(MainMenuDrawerView.this,
+										new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+										MY_PERMISSIONS_REQUEST_LOCATION);
+							}
+						})
+						.create()
+						.show();
+
+
+			} else {
+				// No explanation needed, we can request the permission.
+				ActivityCompat.requestPermissions(this,
+						new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+						MY_PERMISSIONS_REQUEST_LOCATION);
+			}
+
 		}
 
 		if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
