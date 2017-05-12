@@ -52,11 +52,17 @@ String run(String url) throws IOException {
 			PlaceInfo nextitem = new PlaceInfo();
             nextitem.place_name = results.getJSONObject(i).getString("name");
             nextitem.place_id = results.getJSONObject(i).getString("place_id");
-            nextitem.formatted_address = results.getJSONObject(i).getString("vicinity");
-           // nextitem.place_rating = results.getJSONObject(i).getString("rating");
-           // nextitem.place_img_id = results.getJSONObject(i).getJSONArray("photos").getJSONObject(0).getString("photo_reference");
-
-            returninfo.add(nextitem);
+            if(results.getJSONObject(i).has("vicinity"))
+                nextitem.formatted_address = results.getJSONObject(i).getString("vicinity");
+            if(results.getJSONObject(i).has("rating"))
+                nextitem.place_rating = results.getJSONObject(i).getString("rating");
+            if(results.getJSONObject(i).getJSONArray("photos").getJSONObject(0).has("photo_reference"))
+                nextitem.place_img_id = results.getJSONObject(i).getJSONArray("photos").getJSONObject(0).getString("photo_reference");
+            if(results.getJSONObject(i).getJSONObject("geometry").has("location")) {
+                nextitem.loc_lat = results.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getString("lat");
+                nextitem.loc_lng = results.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getString("lng");
+            }
+                returninfo.add(nextitem);
         }
         /*
         PlaceInfo[] returninfo = new PlaceInfo[results.length()];
