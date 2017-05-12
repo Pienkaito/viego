@@ -20,6 +20,19 @@ import static android.app.PendingIntent.getActivity;
  * Created by Mourni on 11.05.2017.
  */
 
+/*
+ADD TO SEARCH ACTIVITY
+String settingsTAG = "AppNameSettings";
+SharedPreferences prefs = getSharedPreferences(settingsTAG, 0);
+boolean miles = prefs.getBoolean("miles", false);
+if(miles == true){
+    populate array with mile stuff
+    Textview meter says "Miles" instead.
+
+    if(miles== true) distance = miles * 1,6 oder so
+}
+ */
+
 public class SettingsActivity extends AppCompatActivity {
 	private String settingsTAG = "AppNameSettings";
 	private SharedPreferences prefs;
