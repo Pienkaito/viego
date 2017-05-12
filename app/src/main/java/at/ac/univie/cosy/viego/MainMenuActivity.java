@@ -98,7 +98,7 @@ public class MainMenuActivity extends AppCompatActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.mainmenu_layout);
+		setContentView(R.layout.mainmenu_layout_with_nav);
 
 		//App Bar init
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -226,7 +226,7 @@ public class MainMenuActivity extends AppCompatActivity
 
 		//Hide Bottom
 		bottom_content = (LinearLayout) findViewById(R.id.mainmenu_bottom_content);
-		bottom_content.setVisibility(View.GONE);
+		bottom_content.setVisibility(View.VISIBLE);
 	}
 
 	@Override
