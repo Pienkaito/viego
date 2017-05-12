@@ -65,7 +65,7 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 
 			// wenn es ein Bild gibt, lade es herunter!
 			if (p.place_img_id != null) {
-				new DownloadImageTask((ImageView) v.findViewById(R.id.img_place))
+				new DownloadImageFromAPI((ImageView) v.findViewById(R.id.img_place))
 						.execute("https://maps.googleapis.com/maps/api/place/photo?" +
 								"maxheight=200&" +
 								"maxwidth=200&" +
@@ -95,28 +95,28 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 		return v;
 	}
 
-	private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-		ImageView bmImage;
+	private class DownloadImageFromAPI extends AsyncTask<String, Void, Bitmap> {
+		ImageView Image;
 
-		private DownloadImageTask(ImageView bmImage) {
-			this.bmImage = bmImage;
+		private DownloadImageFromAPI(ImageView Image) {
+			this.Image = Image;
 		}
 
 		protected Bitmap doInBackground(String... urls) {
 			String urldisplay = urls[0];
-			Bitmap mIcon11 = null;
+			Bitmap return_pic = null;
 			try {
 				InputStream in = new java.net.URL(urldisplay).openStream();
-				mIcon11 = BitmapFactory.decodeStream(in);
+				return_pic = BitmapFactory.decodeStream(in);
 			} catch (Exception e) {
 				Log.e("Error", e.getMessage());
 				e.printStackTrace();
 			}
-			return mIcon11;
+			return return_pic;
 		}
 
 		protected void onPostExecute(Bitmap result) {
-			bmImage.setImageBitmap(result);
+			Image.setImageBitmap(result);
 		}
 	}
 
