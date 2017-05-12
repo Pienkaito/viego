@@ -1,8 +1,16 @@
 package at.ac.univie.cosy.viego.view;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,7 +26,13 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.util.List;
 
 import at.ac.univie.cosy.viego.R;
 import at.ac.univie.cosy.viego.search.SearchActivity;
@@ -63,12 +77,16 @@ import at.ac.univie.cosy.viego.search.SearchActivity;
  * @author raphaelkolhaupt, mayerhubert, beringuelmarkanthony
  */
 public class MainMenuDrawerView extends AppCompatActivity
-		implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
+		implements NavigationView.OnNavigationItemSelectedListener,
+		OnMapReadyCallback,
+		View.OnClickListener {
 
 	private static final float minZoomFactor = 15.0f;
 	private static final float maxZoomFactor = 18.0f;
-	private GoogleMap mMap;
+	private GoogleMap gMap;
 	private LatLng curcoord = new LatLng(48.208456, 16.373130);
+	private LocationManager locationManager;
+	private LocationListener locationListener;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -94,19 +112,83 @@ public class MainMenuDrawerView extends AppCompatActivity
 
 		//Google Maps init
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-				.findFragmentById(R.id.map);
+				.findFragmentById(R.id.gmap);
 		mapFragment.getMapAsync(this);
+		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+		locationListener = new LocationListener() {
+			@Override
+			public void onLocationChanged(Location location) {
+				double lat = location.getLatitude();
+				double lon = location.getLongitude();
+
+				LatLng latLng = new LatLng(lat, lon);
+				Geocoder geocoder = new Geocoder(getApplicationContext());
+				try {
+					List<Address> addressList = geocoder.getFromLocation(lat, lon, 1);
+					String str = addressList.get(0).getLocality() + ", ";
+					str += addressList.get(0).getCountryName();
+					gMap.addMarker(new MarkerOptions()
+							.position(latLng)
+							.title(str)
+							.icon(BitmapDescriptorFactory.fromResource(R.drawable.common_full_open_on_phone))
+					);
+					gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, maxZoomFactor));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+
+			}
+
+			@Override
+			public void onStatusChanged(String provider, int status, Bundle extras) {
+
+			}
+
+			@Override
+			public void onProviderEnabled(String provider) {
+
+			}
+
+			@Override
+			public void onProviderDisabled(String provider) {
+
+			}
+		};
+
+		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+			// TODO: Consider calling
+			//    ActivityCompat#requestPermissions
+			// here to request the missing permissions, and then overriding
+			//   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+			//                                          int[] grantResults)
+			// to handle the case where the user grants the permission. See the documentation
+			// for ActivityCompat#requestPermissions for more details.
+			return;
+		}
+
+		if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+		} else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+		}
 
 		//Navigation Drawer
 		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
 
-		FloatingActionButton myFab = (FloatingActionButton) findViewById(R.id.fabolous);
-		myFab.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
+		FloatingActionButton myFab = (FloatingActionButton) findViewById(R.id.gps_btn);
+		myFab.setOnClickListener(this);
+	}
 
-			}
-		});
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+			case R.id.gps_btn:
+
+				break;
+
+		}
 	}
 
 
@@ -186,12 +268,19 @@ public class MainMenuDrawerView extends AppCompatActivity
 	 */
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
-		mMap = googleMap;
-		mMap.moveCamera(CameraUpdateFactory.newLatLng(curcoord));
-		mMap.moveCamera(CameraUpdateFactory.zoomTo(maxZoomFactor));
-		mMap.setMinZoomPreference(minZoomFactor);
-		mMap.setMaxZoomPreference(maxZoomFactor);
-		mMap.setBuildingsEnabled(false);
+		gMap = googleMap;
+
+		/*
+		gMap.addMarker(new MarkerOptions()
+			.position(curcoord)
+			.title("Viiiiiiii")
+			.icon(BitmapDescriptorFactory.fromResource(R.drawable.common_full_open_on_phone))
+		);
+		gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curcoord,maxZoomFactor));
+		*/
+		//gMap.setMinZoomPreference(minZoomFactor);
+		//gMap.setMaxZoomPreference(maxZoomFactor);
+		gMap.setBuildingsEnabled(false);
 	}
 
 	/*

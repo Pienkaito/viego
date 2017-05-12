@@ -31,7 +31,7 @@
             layout="@layout/mainmenu_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
 
         <include
             android:id="@+id/mainmenu_bottom_content"
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="25dp" />
+            tools:layout_editor_absoluteY="25dp"/>
 
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

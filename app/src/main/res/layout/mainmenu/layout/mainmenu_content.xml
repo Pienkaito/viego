@@ -6,33 +6,33 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
-	<LinearLayout
+	<fragment
+		android:id="@+id/gmap"
+		android:name="com.google.android.gms.maps.SupportMapFragment"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:orientation="horizontal">
-
-		<fragment
-			android:id="@+id/map"
-			android:name="com.google.android.gms.maps.SupportMapFragment"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:layout_above="@+id/main_bar_bottom"
-			android:layout_alignParentEnd="true"
-			android:layout_alignParentStart="true"
-			android:layout_alignParentTop="true"
-			android:layout_weight="1"
-			tools:context="at.ac.univie.cosy.viego.view.MainMenuDrawerView"
-			tools:layout_editor_absoluteX="8dp"
-			tools:layout_editor_absoluteY="8dp" />
-	</LinearLayout>
+		android:layout_above="@+id/main_bar_bottom"
+		android:layout_alignParentEnd="true"
+		android:layout_alignParentStart="true"
+		android:layout_alignParentTop="true"
+		android:layout_weight="1"
+		tools:context="at.ac.univie.cosy.viego.view.MainMenuDrawerView"
+		tools:layout_editor_absoluteX="8dp"
+		tools:layout_editor_absoluteY="8dp"/>
 
 	<android.support.design.widget.FloatingActionButton
-		android:id="@+id/fabolous"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
+		android:id="@+id/gps_btn"
+		android:layout_width="58dp"
+		android:layout_height="57dp"
+		android:layout_gravity="center_vertical|left"
+		android:layout_marginBottom="20dp"
+		android:layout_marginRight="20dp"
 		android:clickable="true"
+		android:visibility="visible"
+		app:elevation="10dp"
 		app:fabSize="mini"
-		app:layout_anchorGravity="bottom|right|end"
-		app:srcCompat="@android:drawable/ic_menu_mylocation" />
+		app:layout_anchor="@+id/gmap"
+		app:layout_anchorGravity="bottom|right"
+		app:srcCompat="@android:drawable/ic_menu_mylocation"/>
 
 </android.support.design.widget.CoordinatorLayout>
