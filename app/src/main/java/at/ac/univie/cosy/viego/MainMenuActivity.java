@@ -37,12 +37,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.List;
 
 import at.ac.univie.cosy.viego.AboutActivity;
 import at.ac.univie.cosy.viego.R;
 import at.ac.univie.cosy.viego.SettingsActivity;
+import at.ac.univie.cosy.viego.search.PlaceInfo;
 import at.ac.univie.cosy.viego.search.SearchActivity;
 
 /**
@@ -224,9 +229,33 @@ public class MainMenuActivity extends AppCompatActivity
 		FloatingActionButton myFab = (FloatingActionButton) findViewById(R.id.gps_btn);
 		myFab.setOnClickListener(this);
 
-		//Hide Bottom
-		bottom_content = (LinearLayout) findViewById(R.id.mainmenu_bottom_content);
-		bottom_content.setVisibility(View.GONE);
+
+/*
+		//if jQuery != null, dann fuehre dass jQuery aus und fuelle bottom content mit den Daten und mach die View
+		//Visible, ansonst unten weiter
+		//https://en.wikipedia.org/w/api.php?action=query&format=json&list=geosearch&titles=Stephansdom&gscoord=48.224368%7C16.353041&gsradius=10000&gslimit=10
+		String jString = null;
+		String url = null;
+		String titleOfstandort = "Stephansdom";
+		String latitude = "48.224368";
+		String longitude = "16.353041";
+
+		url = "https://en.wikipedia.org/w/api.php?" + "action=query&format==json&list=geosearch&titles=" +
+				titleOfstandort + "&gscoord=" + longitude + "|" + &gsradius=10000&gslimit=10"
+		;
+
+			//Hide Bottom
+			JSONObject json = null;
+			try {
+				json = new JSONObject(jString);
+				JSONArray results = json.getJSONArray("results");
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}*/
+			//ansonst
+			bottom_content = (LinearLayout) findViewById(R.id.mainmenu_bottom_content);
+			bottom_content.setVisibility(View.GONE);
 	}
 
 	@Override
