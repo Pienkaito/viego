@@ -50,6 +50,14 @@
 			android:name=".search.SearchResult"
 			android:label="@string/title_activity_searchresult" >
 		</activity>
+		<activity
+			android:name=".AboutActivity"
+			android:label="About" >
+		</activity>
+		<activity
+			android:name=".SettingsActivity"
+			android:label="Settings" >
+		</activity>
 	</application>
 
 </manifest>

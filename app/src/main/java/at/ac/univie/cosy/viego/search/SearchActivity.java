@@ -46,13 +46,13 @@ public class SearchActivity extends AppCompatActivity {
 
     public static final String TAG = "Main Activity Log";
 
-	android.app.ActionBar actionBar = getActionBar();					//ADDED THIS last
+//	android.app.ActionBar actionBar = getActionBar();					//ADDED THIS last
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-		actionBar.setDisplayHomeAsUpEnabled(true);					// ADDED THIS last
+		//actionBar.setDisplayHomeAsUpEnabled(true);					// ADDED THIS last
 
         // Hole mir die progressbar vom view und mach sie unsichtbar.
        nowloading = (ProgressBar)findViewById(R.id.search_progressbar);
