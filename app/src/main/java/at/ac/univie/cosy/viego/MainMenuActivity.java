@@ -311,9 +311,8 @@ public class MainMenuActivity extends AppCompatActivity
 
 		switch (id) {
 			case R.id.nav_001:
-				LinearLayout butt = (LinearLayout) findViewById(R.id.mainmenu_bottom_content);
-				butt.setVisibility(View.VISIBLE);
-
+				Intent intent_search = new Intent(this, SearchActivity.class);
+				startActivity(intent_search);
 				break;
 			case R.id.nav_002:
 				//Start Tour

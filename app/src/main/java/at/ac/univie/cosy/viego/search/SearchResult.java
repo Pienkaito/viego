@@ -75,7 +75,9 @@ public class SearchResult extends AppCompatActivity{
 			  public void onClick(View view) {
 				  Intent i = new Intent(SearchResult.this, TourPreviewActivity.class);
 				  i.putExtra("tourPlaceInfos", adapter.tourPlaceInfos);
+
 				  startActivity(i);
+				  adapter.tourPlaceInfos.clear();
 			  }
 
 		  });
