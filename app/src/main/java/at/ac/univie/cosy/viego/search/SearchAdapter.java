@@ -39,7 +39,7 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 
 	//TO-DO zu diesem Array sollten die Namen hinzugefuegt werden, die durch Klick auf den Add Button zur Tour
 	//hinzugefuegt werden sollten
-	public final static String apikey = "AIzaSyAahAPIqHgVnBjMziAK_I8Vce0wmkEycFY";
+	public final static String apikey = "AIzaSyCo-ALqUgeiisJYac9D9Sog8E3VK9xHv74";
 	HashSet<PlaceInfo> tourPlaceInfos = new HashSet<PlaceInfo>();
 
 	public SearchAdapter(Context context, int textViewResourceId) {

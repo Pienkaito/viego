@@ -58,7 +58,7 @@ public boolean dispatchTouchEvent(MotionEvent ev) {
         */
 public class SearchActivity extends AppCompatActivity {
 
-    public final static String apikey = "AIzaSyAahAPIqHgVnBjMziAK_I8Vce0wmkEycFY";
+    public final static String apikey = "AIzaSyCo-ALqUgeiisJYac9D9Sog8E3VK9xHv74";
     ProgressBar nowloading;
     String selected_category = null;
     Spinner spinner_radius;
