@@ -114,7 +114,7 @@ public class TourPreviewActivity extends AppCompatActivity
 
 		//Google Maps init
 		list = new ArrayList<PlaceInfo>((HashSet<PlaceInfo>) getIntent().getSerializableExtra("tourPlaceInfos"));
-		path = createPath(list);
+		path = createPath(new ArrayList<PlaceInfo>((HashSet<PlaceInfo>) getIntent().getSerializableExtra("tourPlaceInfos")));
 
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.gmap);
@@ -265,17 +265,21 @@ public class TourPreviewActivity extends AppCompatActivity
 	}
 
 	private LatLng getNearest(PlaceInfo curr, ArrayList<PlaceInfo> list) {
+		PlaceInfo shortestPlace = list.get(0);
 		LatLng startpoint = new LatLng(Double.valueOf(curr.loc_lat), Double.valueOf(curr.loc_lng));
-		LatLng minCoordinates = new LatLng(Double.valueOf(list.get(0).loc_lat), Double.valueOf(list.get(0).loc_lng));
+		LatLng minCoordinates = new LatLng(Double.valueOf(shortestPlace.loc_lat), Double.valueOf(shortestPlace.loc_lng));
 		double minDistance = getDistance(startpoint, minCoordinates);
 
 		for (PlaceInfo x : list) {
 			LatLng endpoint = new LatLng(Double.valueOf(x.loc_lat), Double.valueOf(x.loc_lng));
-			if (minDistance > getDistance(startpoint, endpoint)) {
+			double calc = getDistance(startpoint, endpoint);
+			if (minDistance > calc) {
+				list.remove(list.indexOf(x));
 				minCoordinates = endpoint;
-				minDistance = getDistance(startpoint, endpoint);
+				minDistance = calc;
 			}
 		}
+
 		return minCoordinates;
 	}
 
