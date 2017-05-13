@@ -7,7 +7,7 @@ import java.math.RoundingMode;
  * Created by Mark Anthony on 13.05.2017.
  */
 
-class SingletonPosition {
+public class SingletonPosition {
 	private double minlongitude = 16.348924;
 	private double maxlongitude = 16.392974;
 	private double minlatitude = 48.193283;
@@ -18,7 +18,7 @@ class SingletonPosition {
 
 	private static final SingletonPosition ourInstance = new SingletonPosition();
 
-	static SingletonPosition getInstance() {
+	public static SingletonPosition getInstance() {
 		return ourInstance;
 	}
 

@@ -27,6 +27,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 
 import at.ac.univie.cosy.viego.R;
+import at.ac.univie.cosy.viego.SingletonPosition;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -40,23 +41,6 @@ import at.ac.univie.cosy.viego.R;
  * @author raphaelkolhaupt, mayerhubert, beringuelmarkanthony
  */
 
-
-//TODO protected   THIS FREEZES THE ACTIVITY WHILE LOADING SO WE CANT PRESS SEARCH AGAIN
-/*
-in class:
-boolean enabled = true; 
-
-public void enable(boolean b) {
-        enabled = b;
-        }
-
-@Override
-public boolean dispatchTouchEvent(MotionEvent ev) {
-        return enabled ?
-        super.dispatchTouchEvent(ev) :
-        true;
-        }
-        */
 public class SearchActivity extends AppCompatActivity {
 
     public final static String apikey = "AIzaSyCo-ALqUgeiisJYac9D9Sog8E3VK9xHv74";
@@ -136,6 +120,10 @@ public class SearchActivity extends AppCompatActivity {
                         WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                         searchView.clearFocus();
 
+                SingletonPosition singleton = SingletonPosition.getInstance();
+                double lat= singleton.getCurrentlat();
+                double lo = singleton.getCurrentlong();
+
                 //Building the url for the API Call
                 if (query != null){
                     //QUERY + CAT
@@ -144,7 +132,7 @@ public class SearchActivity extends AppCompatActivity {
                         // Ich ändere die URL für den API Aufruf basierend auf der User Auswahl
 
                         url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?&location=" +
-                                "48.220071,16.356277" +
+                                lat +"," +lo+
                                 "&radius=" + radius +
                                 "&type=" + selected_category +
                                 "&keyword=" + query +
@@ -158,7 +146,7 @@ public class SearchActivity extends AppCompatActivity {
                     else
                     {
                             url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?&location=" +
-                                    "48.220071,16.356277" +
+                                    lat +"," +lo+
                                     "&radius=" + radius +
                                     //"&type=" + selected_category +
                                     "&keyword=" + query +
