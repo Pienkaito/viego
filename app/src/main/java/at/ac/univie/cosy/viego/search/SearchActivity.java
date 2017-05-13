@@ -58,8 +58,8 @@ public class SearchActivity extends AppCompatActivity {
         boolean miles = prefs.getBoolean("miles", false);
 
         // Hole mir die progressbar vom view und mach sie unsichtbar.
-        format = (TextView)findViewById(R.id.text_format);
-        if(miles = prefs.getBoolean("miles", false))
+        format = (TextView)findViewById(R.id.text_km);
+        if(prefs.getBoolean("miles", false))
             format.setText("miles");
         else
             format.setText("km");
