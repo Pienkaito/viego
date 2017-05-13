@@ -3,6 +3,7 @@ package at.ac.univie.cosy.viego.search;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -40,21 +42,28 @@ public class SearchActivity extends AppCompatActivity {
     public final static String apikey = "AIzaSyAahAPIqHgVnBjMziAK_I8Vce0wmkEycFY";
     ProgressBar nowloading;
     String selected_category = null;
-    //TODO THIS MAYBE STATIC OR SMTH? SO IT GOES BACK TO NULL HERE ? IDK
     Spinner spinner_radius;
+    TextView format;
+    String settingsTAG = "ViegoSettings";
+
     public final static String API_CALL_MESSAGE = "API_MESSAGE";
 
     public static final String TAG = "Main Activity Log";
-
-//	android.app.ActionBar actionBar = getActionBar();					//ADDED THIS last
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-		//actionBar.setDisplayHomeAsUpEnabled(true);					// ADDED THIS last
+        SharedPreferences prefs = getSharedPreferences(settingsTAG, 0);
+        boolean miles = prefs.getBoolean("miles", false);
 
         // Hole mir die progressbar vom view und mach sie unsichtbar.
+        format = (TextView)findViewById(R.id.text_format);
+        if(miles = prefs.getBoolean("miles", false))
+            format.setText("miles");
+        else
+            format.setText("km");
+
        nowloading = (ProgressBar)findViewById(R.id.search_progressbar);
        nowloading.setVisibility(View.GONE);
 

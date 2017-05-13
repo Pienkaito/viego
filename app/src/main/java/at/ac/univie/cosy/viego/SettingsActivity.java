@@ -34,7 +34,7 @@ if(miles == true){
  */
 
 public class SettingsActivity extends AppCompatActivity {
-	private String settingsTAG = "AppNameSettings";
+	private String settingsTAG = "ViegoSettings";
 	private SharedPreferences prefs;
 
 	@Override
