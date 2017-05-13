@@ -40,22 +40,24 @@ public class SearchResult extends Activity{
     ListView listview;
     //ProgressBar nowloading;
     public static final String TAG = "Main Activity Log";
+	TextView no_result;
 
   @Override
     protected void onCreate (Bundle savedInstanceState){
       super.onCreate(savedInstanceState);
+	  setContentView(R.layout.activity_search_result);
 
       //nowloading = (ProgressBar)findViewById(R.id.search_progressbar);
-	  setContentView(R.layout.activity_search_result);
-      Intent intent = getIntent();
+	  Intent intent = getIntent();
 	  try {
 		  String api_response = intent.getStringExtra(SearchActivity.API_CALL_MESSAGE);
 		  Log.i(TAG, "API wurde aufgerufen!");
 		  Log.i(TAG, api_response);
 		  List<PlaceInfo> searchresult = SearchHandler.getPlaceInformation(api_response);
+		  no_result = (TextView)findViewById(R.id.text_noresults);
+		  if (searchresult.isEmpty())
+		  		no_result.setVisibility(View.VISIBLE);
 
-		  if (searchresult == null)
-			  return;
 
 		  listview = (ListView) findViewById(R.id.search_results);
 

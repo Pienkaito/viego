@@ -56,25 +56,17 @@ String run(String url) throws IOException {
                 nextitem.formatted_address = results.getJSONObject(i).getString("vicinity");
             if(results.getJSONObject(i).has("rating"))
                 nextitem.place_rating = results.getJSONObject(i).getString("rating");
-            if(results.getJSONObject(i).getJSONArray("photos").getJSONObject(0).has("photo_reference"))
-                nextitem.place_img_id = results.getJSONObject(i).getJSONArray("photos").getJSONObject(0).getString("photo_reference");
-            if(results.getJSONObject(i).getJSONObject("geometry").has("location")) {
+            if(results.getJSONObject(i).has("photos")) {
+                if (results.getJSONObject(i).getJSONArray("photos").getJSONObject(0).has("photo_reference"))
+                    nextitem.place_img_id = results.getJSONObject(i).getJSONArray("photos").getJSONObject(0).getString("photo_reference");
+            }
+                if(results.getJSONObject(i).getJSONObject("geometry").has("location")) {
                 nextitem.loc_lat = results.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getString("lat");
                 nextitem.loc_lng = results.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getString("lng");
             }
                 returninfo.add(nextitem);
         }
-        /*
-        PlaceInfo[] returninfo = new PlaceInfo[results.length()];
-        for (int i =0; i< results.length();i++){
-            returninfo[i].place_name = results.getJSONObject(i).getString("name");
-            returninfo[i].place_id = results.getJSONObject(i).getString("place_id");
-            returninfo[i].formatted_address = results.getJSONObject(i).getString("formatted_address");
-            returninfo[i].place_rating = results.getJSONObject(i).getString("rating");
 
-            returninfo[i].place_img_id = results.getJSONObject(i).getJSONArray("photos").getJSONObject(0).getString("photo_reference");
-        }
-        */
         return returninfo;
     }
 
