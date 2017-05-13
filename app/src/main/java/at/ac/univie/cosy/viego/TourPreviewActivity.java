@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,6 +25,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -80,12 +83,14 @@ public class TourPreviewActivity extends AppCompatActivity
 	private LatLng curcoord = new LatLng(48.208456, 16.373130);
 	private LinearLayout layout_content;
 	private ConstraintLayout layout_loading;
-	private PolylineOptions createdPath;
+	private ProgressBar loadingBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tourpreview_layout);
+
+		loadingBar = (ProgressBar) findViewById(R.id.tourpreview_loadingbar);
 
 		layout_content = (LinearLayout) findViewById(R.id.tourpreview_content);
 		layout_content.setVisibility(View.GONE);
@@ -233,33 +238,33 @@ public class TourPreviewActivity extends AppCompatActivity
 		gMap.setMaxZoomPreference(maxZoomFactor);
 		gMap.setBuildingsEnabled(false);
 
-		gMap.addPolyline(new PolylineOptions().add(
-				curcoord,
-				new LatLng(48.207602, 16.373008),
-				new LatLng(48.206741, 16.373515)
-				)
-						.width(10)
-						.color(Color.RED)
-		);
+		HashSet<PlaceInfo> tourPlaceInfos = (HashSet<PlaceInfo>) getIntent().getSerializableExtra("tourPlaceInfos");
+		gMap.addPolyline(this.createPath(tourPlaceInfos));
 	}
 
 	private PolylineOptions createPath(HashSet<PlaceInfo> tourPlaceInfos) {
-		Iterator<PlaceInfo> placeInfoIterator = tourPlaceInfos.iterator();
-		while (placeInfoIterator.hasNext()) {
-			PlaceInfo curr = placeInfoIterator.next();
-			createdPath.add(getNearest(curr, tourPlaceInfos));
-			placeInfoIterator.remove();
+		PolylineOptions createdPath = new PolylineOptions();
+		createdPath.width(10);
+		createdPath.color(Color.RED);
+
+		ArrayList<PlaceInfo> list = new ArrayList<PlaceInfo>(Arrays.asList(tourPlaceInfos.toArray(new PlaceInfo[tourPlaceInfos.size()])));
+		int currentProgress = 0;
+
+		//list.add(Current Position);
+
+		while (!list.isEmpty()) {
+			createdPath.add(this.getNearest(list.get(list.size()), list));
+			loadingBar.setProgress((int) ((double) (++currentProgress / list.size()) * 100));
+			list.remove(list.size());
 		}
+		loadingBar.setProgress(100);
 		return createdPath;
 	}
 
-	private LatLng getNearest(PlaceInfo curr, HashSet<PlaceInfo> list) {
+	private LatLng getNearest(PlaceInfo curr, ArrayList<PlaceInfo> list) {
 		LatLng startpoint = new LatLng(Double.valueOf(curr.loc_lat), Double.valueOf(curr.loc_lng));
-
-		PlaceInfo firstSight = list.iterator().next();
-		LatLng minCoordinates = new LatLng(Double.valueOf(firstSight.loc_lat), Double.valueOf(firstSight.loc_lng));
+		LatLng minCoordinates = new LatLng(Double.valueOf(list.get(0).loc_lat), Double.valueOf(list.get(0).loc_lng));
 		double minDistance = getDistance(startpoint, minCoordinates);
-		list.iterator().remove();
 
 		for (PlaceInfo x : list) {
 			LatLng endpoint = new LatLng(Double.valueOf(x.loc_lat), Double.valueOf(x.loc_lng));

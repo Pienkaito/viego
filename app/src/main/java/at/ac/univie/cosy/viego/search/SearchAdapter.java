@@ -25,6 +25,7 @@ import java.util.Set;
 
 import at.ac.univie.cosy.viego.MainMenuActivity;
 import at.ac.univie.cosy.viego.R;
+import at.ac.univie.cosy.viego.TourPreviewActivity;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -95,7 +96,7 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 			send_button.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					Intent i = new Intent(view.getContext(), MainMenuActivity.class);
+					Intent i = new Intent(view.getContext(), TourPreviewActivity.class);
 					i.putExtra("tourPlaceInfos", tourPlaceInfos);
 					view.getContext().startActivity(i);
 				}

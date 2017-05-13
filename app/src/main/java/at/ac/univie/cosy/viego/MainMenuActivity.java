@@ -355,11 +355,6 @@ public class MainMenuActivity extends AppCompatActivity
 			.title("Viiiiiiii")
 			.icon(BitmapDescriptorFactory.fromResource(R.drawable.common_full_open_on_phone))
 		);
-		*/
-		gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curcoord, maxZoomFactor));
-		gMap.setMinZoomPreference(minZoomFactor);
-		gMap.setMaxZoomPreference(maxZoomFactor);
-		gMap.setBuildingsEnabled(false);
 
 		gMap.addPolyline(new PolylineOptions().add(
 				curcoord,
@@ -369,6 +364,13 @@ public class MainMenuActivity extends AppCompatActivity
 						.width(10)
 						.color(Color.RED)
 		);
+		*/
+		gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curcoord, maxZoomFactor));
+		gMap.setMinZoomPreference(minZoomFactor);
+		gMap.setMaxZoomPreference(maxZoomFactor);
+		gMap.setBuildingsEnabled(false);
+
+
 	}
 
 	/*
