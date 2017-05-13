@@ -37,13 +37,30 @@ import at.ac.univie.cosy.viego.R;
  *     -search_textfield_appbar
  * @author raphaelkolhaupt, mayerhubert, beringuelmarkanthony
  */
+
+
+//TODO protected   THIS FREEZES THE ACTIVITY WHILE LOADING SO WE CANT PRESS SEARCH AGAIN
+/*
+in class:
+boolean enabled = true; 
+
+public void enable(boolean b) {
+        enabled = b;
+        }
+
+@Override
+public boolean dispatchTouchEvent(MotionEvent ev) {
+        return enabled ?
+        super.dispatchTouchEvent(ev) :
+        true;
+        }
+        */
 public class SearchActivity extends AppCompatActivity {
 
     public final static String apikey = "AIzaSyAahAPIqHgVnBjMziAK_I8Vce0wmkEycFY";
     ProgressBar nowloading;
     String selected_category = null;
     Spinner spinner_radius;
-    TextView format;
     String settingsTAG = "ViegoSettings";
 
     public final static String API_CALL_MESSAGE = "API_MESSAGE";
@@ -58,12 +75,13 @@ public class SearchActivity extends AppCompatActivity {
         boolean miles = prefs.getBoolean("miles", false);
 
         // Hole mir die progressbar vom view und mach sie unsichtbar.
-        format = (TextView)findViewById(R.id.text_km);
-        if(prefs.getBoolean("miles", false))
+        //TODO ER FINDET text_KM NICHT OHNE GRUND!?!?
+        /*TextView format = (TextView)findViewById(R.id.text_km);
+        if(miles)
             format.setText("miles");
         else
             format.setText("km");
-
+        */
        nowloading = (ProgressBar)findViewById(R.id.search_progressbar);
        nowloading.setVisibility(View.GONE);
 
