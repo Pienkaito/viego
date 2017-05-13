@@ -17,6 +17,7 @@
     <string name="radio_church">Church</string>
     <string name="radio_museum">Museum</string>
     <string name="search_radius">Search radius</string>
+    <string name="no_result">No Results. Please try again.</string>
     <string-array name="radius_array">
         <item>500</item>
         <item>1000</item>
