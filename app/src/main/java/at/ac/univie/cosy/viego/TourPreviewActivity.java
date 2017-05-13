@@ -25,6 +25,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
@@ -82,16 +83,20 @@ public class TourPreviewActivity extends AppCompatActivity
 	private static final float minZoomFactor = 15.0f;
 	private static final float maxZoomFactor = 18.0f;
 	private GoogleMap gMap;
-	private LatLng curcoord = new LatLng(48.208456, 16.373130);
+	private LatLng curcoord = null;
 	private LinearLayout layout_content;
 	private ConstraintLayout layout_loading;
 	private ProgressBar loadingBar;
 	private PolylineOptions path;
+	private ArrayList<PlaceInfo> list = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tourpreview_layout);
+
+		SingletonPosition singleton = SingletonPosition.getInstance();
+		curcoord = new LatLng(singleton.getCurrentlat(), singleton.getCurrentlong());
 
 		loadingBar = (ProgressBar) findViewById(R.id.tourpreview_loadingbar);
 
@@ -108,8 +113,8 @@ public class TourPreviewActivity extends AppCompatActivity
 		//setSupportActionBar(toolbar);
 
 		//Google Maps init
-		HashSet<PlaceInfo> tourPlaceInfos = (HashSet<PlaceInfo>) getIntent().getSerializableExtra("tourPlaceInfos");
-		path = createPath(tourPlaceInfos);
+		list = new ArrayList<PlaceInfo>((HashSet<PlaceInfo>) getIntent().getSerializableExtra("tourPlaceInfos"));
+		path = createPath(list);
 
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.gmap);
@@ -227,17 +232,23 @@ public class TourPreviewActivity extends AppCompatActivity
 		gMap.setBuildingsEnabled(false);
 
 		gMap.addPolyline(path);
+
+		for (PlaceInfo info : list) {
+			LatLng pos = new LatLng(Double.valueOf(info.loc_lat), Double.valueOf(info.loc_lng));
+			gMap.addMarker(new MarkerOptions()
+					.position(pos)
+					.title(info.place_name)
+			);
+		}
 	}
 
-	private PolylineOptions createPath(HashSet<PlaceInfo> tourPlaceInfos) {
+	private PolylineOptions createPath(ArrayList<PlaceInfo> list) {
 		PolylineOptions createdPath = new PolylineOptions();
 		createdPath.width(10);
 		createdPath.color(Color.RED);
 
-		ArrayList<PlaceInfo> list = new ArrayList<PlaceInfo>(tourPlaceInfos);
 		int currentProgress = 0;
 
-		gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curcoord, maxZoomFactor));
 		SingletonPosition singletonPosition = SingletonPosition.getInstance();
 		PlaceInfo placeInfo = new PlaceInfo();
 		placeInfo.loc_lat = String.valueOf(singletonPosition.getCurrentlat());
