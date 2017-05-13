@@ -8,12 +8,8 @@
             android:title="Sights" />
         <item
             android:id="@+id/nav_002"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Start Tour" />
-        <item
-            android:id="@+id/nav_003"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Settings" />
+            android:title="Settings"/>
         <item
             android:id="@+id/nav_004"
             android:icon="@drawable/ic_menu_share"

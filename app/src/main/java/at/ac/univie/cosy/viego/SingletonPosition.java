@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
+ * <p>This class exists for testing purposes and generates random coordinates inside of Vienna</p> *
  * @author beringuelmarkanthony, mayerhubert, raphaelkolhaupt
  */
-
 public class SingletonPosition {
 	private double minlongitude = 16.348924;
 	private double maxlongitude = 16.392974;

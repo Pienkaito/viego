@@ -2,7 +2,6 @@ package at.ac.univie.cosy.viego;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -23,7 +22,8 @@ import com.google.android.gms.maps.model.LatLng;
 import at.ac.univie.cosy.viego.search.SearchActivity;
 
 /**
- * <p>Dazu gehoerende XML-Files:</p>
+ * <p>Contains all the logic for the main menu of the app</p>
+ * <p>Used XML-Files:</p>
  * <p>res.layout:</p>
  * <ul>
  * <li>mainmenu_layout</li>
@@ -49,8 +49,7 @@ import at.ac.univie.cosy.viego.search.SearchActivity;
  * <p>Everything that displays the bottom part of the main menu will be handled here</p>
  * <p>It has the following elements:</p>
  * <ul>
- * <li>Kill</li>
- * <li>Me</li>
+ * <li>mainmenu_bottom_contenttextview</li>
  * </ul></br>
  * </ul>
  * <p>res.menu:</p></br>
@@ -63,8 +62,7 @@ import at.ac.univie.cosy.viego.search.SearchActivity;
  */
 public class MainMenuActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener,
-		OnMapReadyCallback,
-		View.OnClickListener {
+		OnMapReadyCallback {
 
 	private static final float minZoomFactor = 15.0f;
 	private static final float maxZoomFactor = 18.0f;
@@ -77,6 +75,7 @@ public class MainMenuActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mainmenu_layout_with_nav);
 
+		//For test purposes: Generates random current position for the application
 		SingletonPosition singleton = SingletonPosition.getInstance();
 		curcoord = new LatLng(singleton.getCurrentlat(), singleton.getCurrentlong());
 
@@ -107,27 +106,10 @@ public class MainMenuActivity extends AppCompatActivity
 		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
 
-		FloatingActionButton myFab = (FloatingActionButton) findViewById(R.id.gps_btn);
-		myFab.setOnClickListener(this);
-
-
+		//Since the bottom content is not needed for this activity, it is set to GONE
 		bottom_content = (LinearLayout) findViewById(R.id.mainmenu_bottom_content);
 		bottom_content.setVisibility(View.GONE);
-
-
 	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-			case R.id.gps_btn:
-
-				break;
-
-		}
-	}
-
-	
 
 	/*
 	Sets the app bar drawer with the elements from R.menu.search_app_bar
@@ -151,7 +133,6 @@ public class MainMenuActivity extends AppCompatActivity
 			case R.id.app_bar_search:
 				Intent intent = new Intent(this, SearchActivity.class);
 				startActivity(intent);
-				//Enter Search bar things here
 				break;
 			default:
 				break;
@@ -174,13 +155,10 @@ public class MainMenuActivity extends AppCompatActivity
 				startActivity(intent_search);
 				break;
 			case R.id.nav_002:
-				//Start Tour
-				break;
-			case R.id.nav_003:
 				Intent intent_settings = new Intent(this, SettingsActivity.class);
 				startActivity(intent_settings);
 				break;
-			case R.id.nav_004:
+			case R.id.nav_003:
 				Intent intent_about = new Intent(this, AboutActivity.class);
 				startActivity(intent_about);
 				break;
@@ -194,35 +172,16 @@ public class MainMenuActivity extends AppCompatActivity
 	}
 
 	/*
-	Method, that initiates the Google Map with default coordinates (Center of Vienna)
+	Method, that initiates the Google Map with "your current coordinates"
 	Also limits the zoom factor by the constants minZoomFactor & maxZoomFactor
 	 */
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		gMap = googleMap;
-
-		/*
-		gMap.addMarker(new MarkerOptions()
-			.position(curcoord)
-			.title("Viiiiiiii")
-			.icon(BitmapDescriptorFactory.fromResource(R.drawable.common_full_open_on_phone))
-		);
-
-		gMap.addPolyline(new PolylineOptions().add(
-				curcoord,
-				new LatLng(48.207602, 16.373008),
-				new LatLng(48.206741, 16.373515)
-				)
-						.width(10)
-						.color(Color.RED)
-		);
-		*/
 		gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curcoord, maxZoomFactor));
 		gMap.setMinZoomPreference(minZoomFactor);
 		gMap.setMaxZoomPreference(maxZoomFactor);
 		gMap.setBuildingsEnabled(false);
-
-
 	}
 
 	/*
@@ -238,5 +197,4 @@ public class MainMenuActivity extends AppCompatActivity
 			super.onBackPressed();
 		}
 	}
-
 }
