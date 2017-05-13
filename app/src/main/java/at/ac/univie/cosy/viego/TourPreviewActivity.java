@@ -102,30 +102,10 @@ public class TourPreviewActivity extends AppCompatActivity
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 
-		//Main Menu Layout init
-		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.mainmenu_drawer_layout);
-		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-				this,
-				drawer,
-				toolbar,
-				R.string.navigation_drawer_open,
-				R.string.navigation_drawer_close
-		) {
-		};
-		drawer.setDrawerListener(toggle);
-		toggle.syncState();
-
 		//Google Maps init
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.gmap);
 		mapFragment.getMapAsync(this);
-
-		//Navigation Drawer
-		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-		navigationView.setNavigationItemSelectedListener(this);
-
-		FloatingActionButton myFab = (FloatingActionButton) findViewById(R.id.gps_btn);
-		myFab.setOnClickListener(this);
 
 		/*
 		//if jQuery != null, dann fuehre dass jQuery aus und fuelle bottom content mit den Daten und mach die View
