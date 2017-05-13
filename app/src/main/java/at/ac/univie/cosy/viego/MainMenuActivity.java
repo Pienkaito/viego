@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -255,6 +256,7 @@ public class MainMenuActivity extends AppCompatActivity
 				TextView output_bottom = (TextView) test1View.findViewById(R.id.mainmenu_bottom_contenttextview);
 
 				String output = intent.getStringExtra(AboutActivity.API_CALL_MESSAGE);
+				output_bottom.setMovementMethod(new ScrollingMovementMethod());
 
 				output_bottom.setText(output);
 				bottom_content = (LinearLayout) findViewById(R.id.mainmenu_bottom_content);

@@ -258,7 +258,6 @@ public class TourPreviewActivity extends AppCompatActivity
 		while (!list.isEmpty()) {
 			createdPath.add(getNearest(list.get(list.size() - 1), list));
 			//loadingBar.setProgress((int) ((double) (++currentProgress / list.size()) * 100));
-			list.remove(list.size() - 1);
 		}
 		//loadingBar.setProgress(100);
 		return createdPath;
@@ -274,12 +273,12 @@ public class TourPreviewActivity extends AppCompatActivity
 			LatLng endpoint = new LatLng(Double.valueOf(x.loc_lat), Double.valueOf(x.loc_lng));
 			double calc = getDistance(startpoint, endpoint);
 			if (minDistance > calc) {
-				list.remove(list.indexOf(x));
+				shortestPlace = x;
 				minCoordinates = endpoint;
 				minDistance = calc;
 			}
 		}
-
+		list.remove(list.indexOf(shortestPlace));
 		return minCoordinates;
 	}
 

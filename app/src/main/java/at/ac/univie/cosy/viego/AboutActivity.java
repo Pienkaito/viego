@@ -39,6 +39,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 	;
 	Button button;
 
+	//ads
 	//https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles=St. Stephen's Cathedral, Vienna
 	//kommt dann in TourPreview!!!!!!!!!!!!!
 
@@ -141,7 +142,8 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 
 			String help = result;
 
-			int beginIndex = result.lastIndexOf("\"extract\":\"");
+			//int beginIndex = result.lastIndexOf("\"extract\":\"");
+			int beginIndex = result.lastIndexOf("\"extract\":\"") + 11;
 			int endIndex = result.lastIndexOf("\"");
 			String output = result.substring(beginIndex, endIndex);
 
