@@ -1,54 +1,36 @@
 package at.ac.univie.cosy.viego;
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
-import java.io.IOException;
-import java.util.List;
-
-import at.ac.univie.cosy.viego.AboutActivity;
-import at.ac.univie.cosy.viego.R;
-import at.ac.univie.cosy.viego.SettingsActivity;
-import at.ac.univie.cosy.viego.search.PlaceInfo;
 import at.ac.univie.cosy.viego.search.SearchActivity;
+import at.ac.univie.cosy.viego.search.SearchResult;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * <p>Dazu gehoerende XML-Files:</p>
@@ -256,9 +238,29 @@ public class MainMenuActivity extends AppCompatActivity
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}*/
+
+		Intent intent = getIntent();
+		if(getCallingActivity() == null)
+		{
 			//ansonst
+			//Hide Bottom
 			bottom_content = (LinearLayout) findViewById(R.id.mainmenu_bottom_content);
 			bottom_content.setVisibility(View.GONE);
+		}
+		else
+			{
+				//TextView output_bottom = (TextView) findViewById(R.id.mainmenu_bottom_content);
+				//View header = nav_view.getHeaderView(0);
+				View test1View = findViewById(R.id.mainmenu_bottom_content);
+				TextView output_bottom = (TextView) test1View.findViewById(R.id.mainmenu_bottom_contenttextview);
+
+				String output = intent.getStringExtra(AboutActivity.API_CALL_MESSAGE);
+
+				output_bottom.setText(output);
+				bottom_content = (LinearLayout) findViewById(R.id.mainmenu_bottom_content);
+				bottom_content.setVisibility(View.VISIBLE);
+			}
+
 	}
 
 	@Override
@@ -322,7 +324,8 @@ public class MainMenuActivity extends AppCompatActivity
 		switch (id) {
 			case R.id.nav_001:
 				LinearLayout butt = (LinearLayout) findViewById(R.id.mainmenu_bottom_content);
-				butt.setVisibility(View.GONE);
+				butt.setVisibility(View.VISIBLE);
+
 				break;
 			case R.id.nav_002:
 				//Start Tour
@@ -389,4 +392,5 @@ public class MainMenuActivity extends AppCompatActivity
 			super.onBackPressed();
 		}
 	}
+
 }
