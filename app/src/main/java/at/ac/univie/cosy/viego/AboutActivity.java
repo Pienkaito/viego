@@ -34,7 +34,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 	public static final String API_CALL_MESSAGE = "API_WikiMESSAGE";
 	public static final int REQUEST_CODE = 123;
 	String exactWikiArticle = "St. Stephen's Cathedral, Vienna";
-	String url = "https://en.wikipedia.org/w/api.php?format=jsonfm&action=query&prop=extracts&exintro=&explaintext=&titles="
+	String url = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles="
 			+ exactWikiArticle
 	;
 	Button button;
@@ -139,10 +139,14 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 		@Override
 		protected void onPostExecute(String result) {
 
-			String hels = result;
-			//Ich speichere die Informationen im internal storage und gebe sie an die ResultActivity weiter.
+			String help = result;
+
+			int beginIndex = result.lastIndexOf("\"extract\":\"");
+			int endIndex = result.lastIndexOf("\"");
+			String output = result.substring(beginIndex, endIndex);
+
 			Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
-			intent.putExtra(API_CALL_MESSAGE, result);
+			intent.putExtra(API_CALL_MESSAGE, output);
 			startActivityForResult(intent, REQUEST_CODE);
 			//output.setText(String.format("%.2f %%", percentage ) );
 			//progressBar.setVisibility(View.INVISIBLE);
