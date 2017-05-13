@@ -29,6 +29,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -84,8 +86,7 @@ import okhttp3.Response;
  * @author raphaelkolhaupt, mayerhubert, beringuelmarkanthony
  */
 public class TourPreviewActivity extends AppCompatActivity
-		implements NavigationView.OnNavigationItemSelectedListener,
-		OnMapReadyCallback,
+		implements OnMapReadyCallback,
 		View.OnClickListener {
 
 	private static final float minZoomFactor = 15.0f;
@@ -184,6 +185,9 @@ public class TourPreviewActivity extends AppCompatActivity
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportActionBar().setDisplayShowTitleEnabled(false);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		//getMenuInflater().inflate(R.menu.mainmenu_navigation_drawer, menu);
 		return true;
 	}
 
@@ -197,38 +201,16 @@ public class TourPreviewActivity extends AppCompatActivity
 		int id = item.getItemId();
 
 		switch (id) {
+			case android.R.id.home:
+				// app icon in action bar clicked; goto parent activity.
+				gMap.clear();
+				this.finish();
+				return true;
 			default:
 				break;
 		}
 
 		return super.onOptionsItemSelected(item);
-	}
-
-	/*
-	This method handles all the actions made in the navigation drawer
-   */
-	@SuppressWarnings("StatementWithEmptyBody")
-	@Override
-	public boolean onNavigationItemSelected(MenuItem item) {
-		int id = item.getItemId();
-
-		switch (id) {
-			case R.id.nav_001:
-				break;
-			case R.id.nav_002:
-				//Start Tour
-				break;
-			case R.id.nav_003:
-				break;
-			case R.id.nav_004:
-				break;
-			default:
-				break;
-		}
-
-		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.mainmenu_drawer_layout);
-		drawer.closeDrawer(GravityCompat.START);
-		return true;
 	}
 
 	/*
@@ -252,6 +234,11 @@ public class TourPreviewActivity extends AppCompatActivity
 		gMap.setBuildingsEnabled(false);
 
 		gMap.addPolyline(path);
+
+		gMap.addMarker(new MarkerOptions()
+				.position(curcoord)
+				.title("You are here")
+		);
 
 		for (PlaceInfo info : list) {
 			LatLng pos = new LatLng(Double.valueOf(info.loc_lat), Double.valueOf(info.loc_lng));
@@ -292,7 +279,7 @@ public class TourPreviewActivity extends AppCompatActivity
 		for (PlaceInfo x : list) {
 			LatLng endpoint = new LatLng(Double.valueOf(x.loc_lat), Double.valueOf(x.loc_lng));
 			double calc = getDistance(startpoint, endpoint);
-			if ((calc == 0) || (minDistance > calc)) {
+			if ((calc != 0) && (minDistance > calc)) {
 				shortestPlace = x;
 				minCoordinates = endpoint;
 				minDistance = calc;
@@ -321,22 +308,6 @@ public class TourPreviewActivity extends AppCompatActivity
 	private double rad2deg(double rad) {
 		return (rad * 180 / Math.PI);
 	}
-
-	/*
-	Method, that's being called, everytime the user presses the back button
-	In this case it checks the current state of the navigation drawer and reacts accordingly
-	 */
-	@Override
-	public void onBackPressed() {
-		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.mainmenu_drawer_layout);
-		if (drawer.isDrawerOpen(GravityCompat.START)) {
-			drawer.closeDrawer(GravityCompat.START);
-		} else {
-			super.onBackPressed();
-		}
-	}
-
-
 
 	public class APIWikiSummary extends AsyncTask<String, Void, String> {
 

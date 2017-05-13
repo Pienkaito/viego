@@ -82,7 +82,6 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 	@Override
-
 	public boolean onOptionsItemSelected (MenuItem item){
 		switch (item.getItemId()) {
 			case android.R.id.home:
