@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+			  xmlns:app="http://schemas.android.com/apk/res-auto"
+			  xmlns:tools="http://schemas.android.com/tools"
+			  android:orientation="vertical" android:layout_width="match_parent"
+			  android:layout_height="match_parent"
+			  android:weightSum="1">
 
-    <TextView
-        android:id="@+id/text_noresults"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/no_result"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textStyle="bold"
-        android:visibility="gone"/>
+	<TextView
+		android:id="@+id/text_noresults"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:padding="10dp"
+		android:text="@string/no_result"
+		android:textAlignment="center"
+		android:textAppearance="@style/TextAppearance.AppCompat.Title"
+		android:textStyle="bold"
+		android:visibility="gone"/>
 
     <ListView
-        android:id="@+id/search_results"
-        android:layout_width="match_parent"
-        android:layout_height="451dp" />
+		android:id="@+id/search_results"
+		android:layout_width="match_parent"
+		android:layout_height="296dp"
+		android:layout_weight="0.93"/>
 
     <Button
         android:id="@+id/send_btn"
