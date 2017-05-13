@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -34,12 +36,12 @@ import okhttp3.Response;
  * Created by Mourni on 07.05.2017.
  */
 
-public class SearchResult extends Activity{
+public class SearchResult extends AppCompatActivity{
 
     // to add:  kurzer code damit die placeresults aus dem API call an diese class weitergegeben werden.
     ListView listview;
     //ProgressBar nowloading;
-    public static final String TAG = "Main Activity Log";
+    private static final String TAG = "Main Activity Log";
 	TextView no_result;
 
   @Override
@@ -47,8 +49,9 @@ public class SearchResult extends Activity{
       super.onCreate(savedInstanceState);
 	  setContentView(R.layout.activity_search_result);
 
-      //nowloading = (ProgressBar)findViewById(R.id.search_progressbar);
-	  Intent intent = getIntent();
+	  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+      Intent intent = getIntent();
 	  try {
 		  String api_response = intent.getStringExtra(SearchActivity.API_CALL_MESSAGE);
 		  Log.i(TAG, "API wurde aufgerufen!");
@@ -63,13 +66,7 @@ public class SearchResult extends Activity{
 
 		  final SearchAdapter adapter = new SearchAdapter(this, android.R.layout.simple_list_item_1, searchresult);
 		  listview.setAdapter(adapter);
-		 /* listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			  @Override
-			  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-				  Toast.makeText(getBaseContext(),parent.getItemAtPosition(position)+"is selected", Toast.LENGTH_LONG).show();
-			  }
-		  });*/
 		  Button send_button = (Button) findViewById(R.id.send_btn);
 		  send_button.setOnClickListener(new View.OnClickListener() {
 			  @Override
@@ -85,16 +82,23 @@ public class SearchResult extends Activity{
 	  }
 
       catch (JSONException e){
-        //  nowloading.setVisibility(View.GONE);
           Log.e(TAG, "JSON Konvertierung failed");
           Log.e(TAG, e.getMessage());
       }
-     // nowloading.setVisibility(View.GONE);
-
 
 
   }
 
+	public boolean onOptionsItemSelected (MenuItem item){
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				// app icon in action bar clicked; goto parent activity.
+				this.finish();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
 
 
 

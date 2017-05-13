@@ -17,33 +17,12 @@ import java.util.List;
 
 public class SearchHandler {
 
-    //pagetoken   erlaubt es uns die nächsten 20 Ergebnisse abzufragen!
-
-    /*
-    String url =   MUSS MAN ZUSAMMENSTÜCKELN!
-
-
-    TO BE MOVED TO SEARCH ACTIVITY
-
-    OkHttpClient client = new OkHttpClient();
-
-String run(String url) throws IOException {
-  Request request = new Request.Builder()
-      .url(url)
-      .build();
-
-  Response response = client.newCall(request).execute();
-  return response.body().string();
-}
-    */
     public static List<PlaceInfo> getPlaceInformation (String jString) throws JSONException
     {
 
         JSONObject json = new JSONObject(jString);
 
         JSONArray results = json.getJSONArray("results");
-
-
 
 
         List<PlaceInfo> returninfo = new LinkedList<>();

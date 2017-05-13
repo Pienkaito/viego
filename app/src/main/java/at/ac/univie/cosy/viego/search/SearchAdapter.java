@@ -37,9 +37,9 @@ import okhttp3.Response;
 
 public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 
-	//TO-DO zu diesem Array sollten die Namen hinzugefuegt werden, die durch Klick auf den Add Button zur Tour
-	//hinzugefuegt werden sollten
-	public final static String apikey = "AIzaSyAahAPIqHgVnBjMziAK_I8Vce0wmkEycFY";
+
+	private final static String apikey = "AIzaSyAahAPIqHgVnBjMziAK_I8Vce0wmkEycFY";
+
 	HashSet<PlaceInfo> tourPlaceInfos = new HashSet<PlaceInfo>();
 
 	public SearchAdapter(Context context, int textViewResourceId) {
@@ -91,10 +91,6 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 					Toast.makeText(getContext(), "You clicked a button yay", Toast.LENGTH_LONG).show();
 				}
 			});
-
-
-
-
 		}
 		return v;
 	}
