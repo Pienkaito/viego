@@ -15,11 +15,14 @@ public class PlaceInfo implements Serializable {
     public String place_id = null;
     public String place_img_id = null;
     public String formatted_address = null;
-	Bitmap picture;
+	Bitmap picture =null;
     public String loc_lng = null;
     public String loc_lat = null;
     public String place_name = null;
     public String place_rating = null;
+
+
+	// We can download a picture and save it with this method if we want to!
 
 	public void getPicture(String place_img_id){
 		try {
