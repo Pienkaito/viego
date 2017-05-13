@@ -76,8 +76,8 @@ public class SearchResult extends Activity{
 
 			  //TODO  I MOVED THE CLICK LISTENER HERE AND CHANGED ADAPTER TO FINAL
 			  public void onClick(View view) {
-				  Intent i = new Intent(getApplicationContext(), TourPreviewActivity.class);
-				  //i.putExtra("tourPlaceInfos", adapter.tourPlaceInfos);
+				  Intent i = new Intent(SearchResult.this, TourPreviewActivity.class);
+				  i.putExtra("tourPlaceInfos", adapter.tourPlaceInfos);
 				  startActivity(i);
 			  }
 
