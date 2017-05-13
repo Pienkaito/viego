@@ -3,6 +3,7 @@ package at.ac.univie.cosy.viego;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -13,11 +14,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,6 +40,9 @@ import java.util.Iterator;
 
 import at.ac.univie.cosy.viego.search.PlaceInfo;
 import at.ac.univie.cosy.viego.search.SearchActivity;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * <p>Dazu gehoerende XML-Files:</p>
@@ -90,6 +98,14 @@ public class TourPreviewActivity extends AppCompatActivity
 	private PolylineOptions path;
 	private ArrayList<PlaceInfo> list = null;
 
+	public static final String TAG = "Mainmenu Activity Log";
+	public static final String API_CALL_MESSAGE = "API_WikiMESSAGE";
+	public static final int REQUEST_CODE = 123;
+	String exactWikiArticle = "St. Stephen's Cathedral, Vienna";
+	String url = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles="
+			+ exactWikiArticle
+			;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -99,6 +115,10 @@ public class TourPreviewActivity extends AppCompatActivity
 		curcoord = new LatLng(singleton.getCurrentlat(), singleton.getCurrentlong());
 
 		loadingBar = (ProgressBar) findViewById(R.id.tourpreview_loadingbar);
+
+		APIWikiSummary APIWikiSummary = new APIWikiSummary();
+		APIWikiSummary.execute(url);
+
 
 		/*
 		layout_content = (LinearLayout) findViewById(R.id.tourpreview_content);
@@ -315,4 +335,86 @@ public class TourPreviewActivity extends AppCompatActivity
 			super.onBackPressed();
 		}
 	}
+
+
+
+	public class APIWikiSummary extends AsyncTask<String, Void, String> {
+
+		//private String url;
+		OkHttpClient client = new OkHttpClient();
+
+
+
+		/**
+		 * Wird aufgerufen, bevor der Task ausgefuehrt wird. Und setzt den Maximalwert der ProgressBar auf 100.
+		 */
+		@Override
+		protected void onPreExecute() {
+
+		}
+
+
+
+		@Override
+		protected String doInBackground(String... params) {
+			Request.Builder builder = new Request.Builder();
+			//Ich nehme die URL und mache eine request
+			builder.url(params[0]);
+			Request request = builder.build();
+
+			Log.e(TAG, "Requested URL worked");
+
+			try
+			{
+				//Ich führe den API aufruf aus, und wenn erfolgreich ohne Exception, returne das Ergebnis an die onPostExecute funktion.
+				Response response = client.newCall(request).execute();
+				Log.e(TAG, "executed ok http");
+				return response.body().string();
+
+			} catch (Exception e) //Exception if call fails.
+			{
+				Log.e(TAG, "API Call failed");
+				Log.e(TAG, e.getMessage());
+			}
+			return null;
+		}
+
+		/**
+		 * Wird mehrmals von doInBackground aufgerufen, um den Fortschritt anzuzeigen.
+		 * @param values der Wert, der den Fortschritt anzeigt
+		 */
+		protected void onProgressUpdate(Integer... values) {
+
+			Log.v("Progress","Once");
+		}
+
+		/**
+		 * Wird nachdem Beenden der Methode doInBackground aufgerufen und berechnet anhand des uebergebenen result
+		 * den Prozentsatz an ausgeliehenen Raedern. Außerdem wird die Progressbar wieder versteckt.
+		 * @param result beinhaltet den String mit der Anzahl der Summe an EmptySlots und FreeBikes,
+		 * der von doInBackground returned worden ist.
+		 */
+		@Override
+		protected void onPostExecute(String result) {
+
+			String help = result;
+
+			//int beginIndex = result.lastIndexOf("\"extract\":\"");
+			int beginIndex = result.lastIndexOf("\"extract\":\"") + 11;
+			int endIndex = result.lastIndexOf("\"");
+			String output = result.substring(beginIndex, endIndex);
+
+			View test1View = findViewById(R.id.tourpreview_bottom_content);
+			TextView output_bottom = (TextView) test1View.findViewById(R.id.mainmenu_bottom_contenttextview);
+
+			output_bottom.setMovementMethod(new ScrollingMovementMethod());
+
+			output_bottom.setText(output);
+
+			//output.setText(String.format("%.2f %%", percentage ) );
+			//progressBar.setVisibility(View.INVISIBLE);
+		}
+	}
+
+
 }
