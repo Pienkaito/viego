@@ -202,21 +202,24 @@ public class TourPreviewActivity extends AppCompatActivity
 		return pointA.distanceTo(pointB);
 	}
 
+	/**
+	 * APIWikiSummary uebernimmt die Aufgabe der Anfrage an die WikiApi um die Summary eines Standorts zurueckzugeben
+	 */
 	public class APIWikiSummary extends AsyncTask<String, Void, String> {
-
 		//private String url;
 		OkHttpClient client = new OkHttpClient();
-
 
 		/**
 		 * Wird aufgerufen, bevor der Task ausgefuehrt wird. Und setzt den Maximalwert der ProgressBar auf 100.
 		 */
 		@Override
-		protected void onPreExecute() {
+		protected void onPreExecute() {	}
 
-		}
-
-
+		/**
+		 * Wird im Hintergrund ausgefuehrt und holt sich die Daten von der API
+		 * @param params beinhaltet die url, zu der die Verbindung aufgebaut wird
+		 * @return result als String, der die durch die übertragenen Daten beinhaltet
+		 */
 		@Override
 		protected String doInBackground(String... params) {
 			Request.Builder builder = new Request.Builder();
@@ -246,23 +249,17 @@ public class TourPreviewActivity extends AppCompatActivity
 		 * @param values der Wert, der den Fortschritt anzeigt
 		 */
 		protected void onProgressUpdate(Integer... values) {
-
 			Log.v("Progress", "Once");
 		}
 
 		/**
-		 * Wird nachdem Beenden der Methode doInBackground aufgerufen und berechnet anhand des uebergebenen result
-		 * den Prozentsatz an ausgeliehenen Raedern. Außerdem wird die Progressbar wieder versteckt.
-		 *
-		 * @param result beinhaltet den String mit der Anzahl der Summe an EmptySlots und FreeBikes,
-		 *               der von doInBackground returned worden ist.
+		 * Wird nachdem Beenden der Methode doInBackground aufgerufen
+		 * @param result beinhaltet den String der von der URL uebertragenen Daten
 		 */
 		@Override
 		protected void onPostExecute(String result) {
-
 			String help = result;
 
-			//int beginIndex = result.lastIndexOf("\"extract\":\"");
 			int beginIndex = result.lastIndexOf("\"extract\":\"") + 11;
 			int endIndex = result.lastIndexOf("\"");
 			String output = result.substring(beginIndex, endIndex);
@@ -273,9 +270,6 @@ public class TourPreviewActivity extends AppCompatActivity
 			output_bottom.setMovementMethod(new ScrollingMovementMethod());
 
 			output_bottom.setText(output);
-
-			//output.setText(String.format("%.2f %%", percentage ) );
-			//progressBar.setVisibility(View.INVISIBLE);
 		}
 	}
 

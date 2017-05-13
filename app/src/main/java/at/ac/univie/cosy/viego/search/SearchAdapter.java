@@ -1,11 +1,10 @@
 package at.ac.univie.cosy.viego.search;
 
 import android.content.Context;
-import android.content.Intent;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,28 +16,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.InputStream;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import at.ac.univie.cosy.viego.MainMenuActivity;
 import at.ac.univie.cosy.viego.R;
-import at.ac.univie.cosy.viego.TourPreviewActivity;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
 /**
- * https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
- * @author beringuelmarkanthony, mayerhubert, raphaelkolhaupt
+ * Dazu gehoerende XML-Files:<br>
+ *    list_item_place<br>
+ * @author raphaelkolhaupt, mayerhubert, beringuelmarkanthony
  */
 
+
+//This is a custom adapter that applies our data from PlaceInfo to our custom list item and returns the view
 public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 
-	//TO-DO zu diesem Array sollten die Namen hinzugefuegt werden, die durch Klick auf den Add Button zur Tour
-	//hinzugefuegt werden sollten
+
 	public final static String apikey = "AIzaSyCo-ALqUgeiisJYac9D9Sog8E3VK9xHv74";
 	HashSet<PlaceInfo> tourPlaceInfos = new HashSet<PlaceInfo>();
 
@@ -52,7 +43,6 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-
 		View v = convertView;
 
 		if (v == null) {
@@ -60,14 +50,13 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 			inflater = LayoutInflater.from(getContext());
 			v = inflater.inflate(R.layout.list_item_place, null);
 		}
-
 		PlaceInfo p = getItem(position);
 
 		if (p != null) {
 			TextView place_description = (TextView) v.findViewById(R.id.text_place_description);
 			TextView place_name = (TextView) v.findViewById(R.id.text_place_name);
 
-			// wenn es ein Bild gibt, lade es herunter!
+			//if there is a picture reference, we download the picture!
 			if (p.place_img_id != null) {
 				new DownloadImageFromAPI((ImageView) v.findViewById(R.id.img_place))
 						.execute("https://maps.googleapis.com/maps/api/place/photo?" +
@@ -88,7 +77,7 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 					int position = (Integer) view.getTag();
 					PlaceInfo objectinfo = getItem(position);
 					tourPlaceInfos.add(objectinfo);
-					Toast.makeText(getContext(), "You clicked a button yay", Toast.LENGTH_LONG).show();
+					Toast.makeText(getContext(), "Destination has been added to the Tour!", Toast.LENGTH_LONG).show();
 				}
 			});
 
