@@ -77,7 +77,7 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 					int position = (Integer) view.getTag();
 					PlaceInfo objectinfo = getItem(position);
 					tourPlaceInfos.add(objectinfo);
-					Toast.makeText(getContext(), "You clicked a button yay", Toast.LENGTH_LONG).show();
+					Toast.makeText(getContext(), "Destination has been added to the Tour!", Toast.LENGTH_LONG).show();
 				}
 			});
 
