@@ -79,7 +79,7 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 	@Override
-	
+
 	public boolean onOptionsItemSelected (MenuItem item){
 		switch (item.getItemId()) {
 			case android.R.id.home:
@@ -104,26 +104,29 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
+				//if the user submits his text:
                 SharedPreferences prefs = getSharedPreferences(settingsTAG, 0);
                 boolean miles = prefs.getBoolean("miles", false);
                 String radius = spinner_radius.getSelectedItem().toString();
+				//if the setting says we use miles, we have to calculate the approximate meters
                 if(miles) {
                     double rad = Double.parseDouble(radius) * 1609;
                     radius = String.valueOf((int)rad);
                 }
                 String url = null;
+				// we make the loading bar visible and turn off user interaction while also removing the input overlay
                 nowloading.setVisibility(View.VISIBLE);
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                         WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                         searchView.clearFocus();
-
+				//we calculate the current position (Simulated, dummy)
                 SingletonPosition singleton = SingletonPosition.getInstance();
                 double lat= singleton.getCurrentlat();
                 double lo = singleton.getCurrentlong();
 
                 //Building the url for the API Call
                 if (query != null){
-                    //QUERY + CAT
+                    //QUERY + CATEGORY provided
                     if (selected_category != null) {
                         //Ich mache die Progressbar sichtbar da der Button geklickt wurde
                         // Ich ändere die URL für den API Aufruf basierend auf der User Auswahl
@@ -136,9 +139,9 @@ public class SearchActivity extends AppCompatActivity {
                                 "&language=en"+
                                 "&key=" + apikey  //AIzaSyAahAPIqHgVnBjMziAK_I8Vce0wmkEycFY
                         ;
-                        // lat 48.220071   long 16.356277
+                        // lat 48.220071   long 16.356277 =  our institute
                     }
-                    // NO CATEGORY
+                    // NO CATEGORY provided!
                     else
                     {
                             url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?&location=" +
@@ -171,7 +174,7 @@ public class SearchActivity extends AppCompatActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         Log.i(TAG, "changed category: was "+ selected_category);
-        // Check which radio button was clicked
+        // Check which radio button was clicked and change value
         switch(view.getId()) {
             case R.id.radio_ALL:
                 if (checked)
@@ -203,7 +206,6 @@ public class SearchActivity extends AppCompatActivity {
         Log.i(TAG, "changed cat: is now"+selected_category);
     }
     public class APICallerPlaces extends AsyncTask<String, Void, String> {
-
         OkHttpClient client = new OkHttpClient();
 
         @Override
