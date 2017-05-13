@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -41,7 +42,7 @@ public class SettingsActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_settings);
 		prefs = getSharedPreferences(settingsTAG, 0);
 
@@ -67,6 +68,17 @@ public class SettingsActivity extends AppCompatActivity {
 			}
 		});
 
+	}
+
+	public boolean onOptionsItemSelected (MenuItem item){
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				// app icon in action bar clicked; goto parent activity.
+				this.finish();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 }
 

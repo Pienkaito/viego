@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -62,6 +63,7 @@ public class SearchActivity extends AppCompatActivity {
     String selected_category = null;
     Spinner spinner_radius;
     String settingsTAG = "ViegoSettings";
+    TextView format;
 
     public final static String API_CALL_MESSAGE = "API_MESSAGE";
 
@@ -73,37 +75,24 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         SharedPreferences prefs = getSharedPreferences(settingsTAG, 0);
         boolean miles = prefs.getBoolean("miles", false);
-
+        /*
         // Hole mir die progressbar vom view und mach sie unsichtbar.
         //TODO ER FINDET text_KM NICHT OHNE GRUND!?!?
-        /*TextView format = (TextView)findViewById(R.id.text_km);
+        format = (TextView) findViewById(R.id.text_km);
         if(miles)
             format.setText("miles");
         else
             format.setText("km");
         */
-       nowloading = (ProgressBar)findViewById(R.id.search_progressbar);
-       nowloading.setVisibility(View.GONE);
+        nowloading = (ProgressBar)findViewById(R.id.search_progressbar);
+        nowloading.setVisibility(View.GONE);
 
         // Define Spinner, apply spinner adapter to spinner to fill with values form the array
         spinner_radius = (Spinner) findViewById(R.id.spinner_umkreis);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.radius_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_radius.setAdapter(adapter);
-
-
-        //android.app.ActionBar actionBar = getActionBar();
-        //getActionBar().setCustomView(R.layout.mainmenu_layout);
-
-
-        // Toolbar wird geholt und der Titel der App wird nicht angezeigt d
-        //Toolbar searchToolbar = (Toolbar) findViewById(R.id.search_toolbar);
-        //setSupportActionBar(searchToolbar);
-
     }
-
-
-
 
 	@Override
 
@@ -124,22 +113,24 @@ public class SearchActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getMenuInflater().inflate(R.menu.search_textfield_appbar, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.menuSearch).getActionView();
+        final SearchView searchView = (SearchView) menu.findItem(R.id.menuSearch).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
                 String url = null;
+                nowloading.setVisibility(View.VISIBLE);
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                        searchView.clearFocus();
 
-                //QUERY
+                //Building the url for the API Call
                 if (query != null){
                     //QUERY + CAT
                     if (selected_category != "default") {
                         //Ich mache die Progressbar sichtbar da der Button geklickt wurde
-                       // nowloading.setVisibility(View.VISIBLE);
                         // Ich ändere die URL für den API Aufruf basierend auf der User Auswahl
-                        url = null;
 
                         url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?&location=" +
                                 "48.220071,16.356277" +
@@ -163,11 +154,8 @@ public class SearchActivity extends AppCompatActivity {
                                     ;
                     }
                 }
-
-                    //Ich frage bei der API an über den Konstruktor und die execute funktion mit der vollständigen URL als parameter
-
+                //Starting the API Caller with the url to get results.
                 if (url != null) {
-                    // TODO nowloading.setVisibility(View.VISIBLE);
 					Log.i(TAG, "I sent"+url);
                     APICallerPlaces places_api = new APICallerPlaces();
                     places_api.execute(url);
@@ -176,7 +164,6 @@ public class SearchActivity extends AppCompatActivity {
             }
             @Override
             public boolean onQueryTextChange(String query) {
-                //TODO write your code what you want to perform on search text change
                 return true;
             }
         });
@@ -236,6 +223,7 @@ public class SearchActivity extends AppCompatActivity {
 
             } catch (Exception e) //Exception if call fails.
             {
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 Log.e(TAG, "API Call for String failed");
                 Log.e(TAG, e.getMessage());
                 //print error message
@@ -253,24 +241,20 @@ public class SearchActivity extends AppCompatActivity {
                 //Ich speichere die Informationen im internal storage und gebe sie an die ResultActivity weiter.
                 Intent intent = new Intent(getApplicationContext(), SearchResult.class);
                 intent.putExtra(API_CALL_MESSAGE, api_response);
-
                 //Die Berechnungen sind fertig, deshalb mache ich die Progressbar wieder unsichtbar und rufe die Result Activity auf
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                nowloading.setVisibility(View.GONE);
+
                 startActivity(intent);
 
             } catch (Exception e) // Exception wird gefangen nachdem die konvertierung fehlschlägt
             {
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                nowloading.setVisibility(View.GONE);
                 Log.e(TAG, "put INTENT FAILED");
                 Log.e(TAG, e.getMessage());
                 //Error message!
             }
         }
-
     }
-
-    //Following added by Mourni:
-/*
-    public void onClick(View view) {  // ERROR HIER WEIL NOCH KEIN SEARCH BUTTON
-
-    }
-*/
 }
