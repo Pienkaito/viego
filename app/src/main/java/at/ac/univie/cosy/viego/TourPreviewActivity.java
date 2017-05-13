@@ -1,101 +1,56 @@
 package at.ac.univie.cosy.viego;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Iterator;
 
 import at.ac.univie.cosy.viego.search.PlaceInfo;
-import at.ac.univie.cosy.viego.search.SearchActivity;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * <p>Dazu gehoerende XML-Files:</p>
+ * This class generates a path for the tour using the chosen sights from SearchResult.java
+ * <p>Used XML-Files:</p>
  * <p>res.layout:</p>
  * <ul>
- * <li>mainmenu_layout</li>
- * <p>Layout of the main menu without the navigation drawer</p>
+ * <li>tourpreview_layout</li>
+ * <p>Layout of the Tour previewer</p>
  * <p>It has the following elements:</p>
  * <ul>
- * <li>R.id.toolbar</li>
- * </ul></br>
- * <li>mainmenu_layout_with_nav</li>
- * <p>Layout of the main menu with the navigation drawer</p>
- * <p>It has the following elements:</p>
- * <ul>
- * <li>R.id.nav_view</li>
- * </ul></br>
- * <li>navigation_drawer_header</li>
- * <p>Header of the navigation drawer, which contains a logo and the name of the app</p>
- * <p>It has the following elements:</p>
- * <ul>
- * <li>R.id.nav_header_img</li>
- * <li>R.id.nav_header_link</li>
- * </ul></br>
- * <li>mainmenu_bottom_content</li>
- * <p>Everything that displays the bottom part of the main menu will be handled here</p>
- * <p>It has the following elements:</p>
- * <ul>
- * <li>Kill</li>
- * <li>Me</li>
- * </ul></br>
- * </ul>
- * <p>res.menu:</p></br>
- * <ul>
- * <li>mainmenu_navigation_drawer</li>
- * <li>search_app_bar</li>
+ * <li>R.id.tourpreview_bottom_content</li>
  * </ul>
  *
  * @author raphaelkolhaupt, mayerhubert, beringuelmarkanthony
  */
 public class TourPreviewActivity extends AppCompatActivity
-		implements OnMapReadyCallback,
-		View.OnClickListener {
+		implements OnMapReadyCallback {
 
 	private static final float minZoomFactor = 15.0f;
 	private static final float maxZoomFactor = 18.0f;
 	private GoogleMap gMap;
-	private LatLng curcoord = null;
-	private LinearLayout layout_content;
-	private ConstraintLayout layout_loading;
-	private ProgressBar loadingBar;
+	private LatLng curcoord = new LatLng(
+			SingletonPosition.getInstance().getCurrentlat(),
+			SingletonPosition.getInstance().getCurrentlong());
 	private PolylineOptions path;
 	private ArrayList<PlaceInfo> list = null;
 
@@ -103,42 +58,22 @@ public class TourPreviewActivity extends AppCompatActivity
 	public static final String API_CALL_MESSAGE = "API_WikiMESSAGE";
 	public static final int REQUEST_CODE = 123;
 
-
-	int random = (int )(Math.random() * 10);
+	int random = (int) (Math.random() * 10);
 
 	String[] exactWikiArticle = {"St. Stephen's Cathedral, Vienna", "Karlsplatz", "Volkstheater,_Vienna",
-	"Gasometer,_Vienna", "TU_Wien", "Wiener_Riesenrad", "Albertina", "Natural_History_Museum,_Vienna",
-	"Austrian_National_Library", "Wotruba_Church"};
+			"Gasometer,_Vienna", "TU_Wien", "Wiener_Riesenrad", "Albertina", "Natural_History_Museum,_Vienna",
+			"Austrian_National_Library", "Wotruba_Church"};
 
 	String url = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles="
-			+ exactWikiArticle[random]
-			;
+			+ exactWikiArticle[random];
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tourpreview_layout);
 
-		SingletonPosition singleton = SingletonPosition.getInstance();
-		curcoord = new LatLng(singleton.getCurrentlat(), singleton.getCurrentlong());
-
-		loadingBar = (ProgressBar) findViewById(R.id.tourpreview_loadingbar);
-
 		APIWikiSummary APIWikiSummary = new APIWikiSummary();
 		APIWikiSummary.execute(url);
-
-
-		/*
-		layout_content = (LinearLayout) findViewById(R.id.tourpreview_content);
-		layout_content.setVisibility(View.GONE);
-
-		layout_loading = (ConstraintLayout) findViewById(R.id.tourpreview_loading);
-		layout_loading.setVisibility(View.VISIBLE);
-		*/
-
-		//App Bar init
-		//Toolbar toolbar = (Toolbar) findViewById(R.id.preview_toolbar);
-		//setSupportActionBar(toolbar);
 
 		//Google Maps init
 		list = new ArrayList<PlaceInfo>((HashSet<PlaceInfo>) getIntent().getSerializableExtra("tourPlaceInfos"));
@@ -148,68 +83,27 @@ public class TourPreviewActivity extends AppCompatActivity
 				.findFragmentById(R.id.gmap);
 		mapFragment.getMapAsync(this);
 
-		/*
-		//if jQuery != null, dann fuehre dass jQuery aus und fuelle bottom content mit den Daten und mach die View
-		//Visible, ansonst unten weiter
-		//https://en.wikipedia.org/w/api.php?action=query&format=json&list=geosearch&titles=Stephansdom&gscoord=48.224368%7C16.353041&gsradius=10000&gslimit=10
-		String jString = null;
-		String url = null;
-		String titleOfstandort = "Stephansdom";
-		String latitude = "48.224368";
-		String longitude = "16.353041";
-
-		url = "https://en.wikipedia.org/w/api.php?" + "action=query&format==json&list=geosearch&titles=" +
-				titleOfstandort + "&gscoord=" + latitude + "|" + longitude + "&gsradius=10000&gslimit=10"
-		;
-
-			//Hide Bottom
-			JSONObject json = null;
-			try {
-				json = new JSONObject(jString);
-				JSONArray results = json.getJSONArray("results");
-
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-			//ansonst
-			bottom_content = (LinearLayout) findViewById(R.id.mainmenu_bottom_content);
-			bottom_content.setVisibility(View.GONE);
-			*/
-	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-			case R.id.gps_btn:
-
-				break;
-
-		}
 	}
 
 	/*
-	Sets the app bar drawer with the elements from R.menu.search_app_bar
+	Overrides the action bar with a back button
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		//getMenuInflater().inflate(R.menu.mainmenu_navigation_drawer, menu);
 		return true;
 	}
 
 	/*
-	This method handles all the actions made in the app bar.
-	The action bar will automatically handle clicks on the Home/Up button,
-	so long as you specify a parent activity in AndroidManifest.xml.
+	This method handles all the actions made in the action bar.
+	In this case the back arrow button
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
-
 		switch (id) {
 			case android.R.id.home:
-				// app icon in action bar clicked; goto parent activity.
 				gMap.clear();
 				this.finish();
 				return true;
@@ -221,20 +115,12 @@ public class TourPreviewActivity extends AppCompatActivity
 	}
 
 	/*
-	Method, that initiates the Google Map with default coordinates (Center of Vienna)
+	Method, that initiates the Google Map with the path included
 	Also limits the zoom factor by the constants minZoomFactor & maxZoomFactor
 	 */
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		gMap = googleMap;
-
-		/*
-		gMap.addMarker(new MarkerOptions()
-			.position(curcoord)
-			.title("Viiiiiiii")
-			.icon(BitmapDescriptorFactory.fromResource(R.drawable.common_full_open_on_phone))
-		);
-		*/
 		gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(curcoord, maxZoomFactor));
 		gMap.setMinZoomPreference(minZoomFactor);
 		gMap.setMaxZoomPreference(maxZoomFactor);
@@ -256,12 +142,17 @@ public class TourPreviewActivity extends AppCompatActivity
 		}
 	}
 
+	/*
+	This method is needed for creating the paths.
+	As starting point, it will use the user's current position and adds it to the collection of
+	coordinates and the method will draw a path to the nearest sight. Once a match has been found
+	it will take that sight as new "current" position and draw the shortest path as well until
+	all sights used.
+	 */
 	private PolylineOptions createPath(ArrayList<PlaceInfo> list) {
 		PolylineOptions createdPath = new PolylineOptions();
 		createdPath.width(10);
 		createdPath.color(Color.RED);
-
-		int currentProgress = 0;
 
 		SingletonPosition singletonPosition = SingletonPosition.getInstance();
 		PlaceInfo placeInfo = new PlaceInfo();
@@ -271,12 +162,13 @@ public class TourPreviewActivity extends AppCompatActivity
 
 		while (!list.isEmpty()) {
 			createdPath.add(getNearest(list.get(list.size() - 1), list));
-			//loadingBar.setProgress((int) ((double) (++currentProgress / list.size()) * 100));
 		}
-		//loadingBar.setProgress(100);
 		return createdPath;
 	}
 
+	/*
+	This method calculates the shortest distance between all sights and returns the coordinates
+	 */
 	private LatLng getNearest(PlaceInfo curr, ArrayList<PlaceInfo> list) {
 		PlaceInfo shortestPlace = list.get(0);
 		LatLng startpoint = new LatLng(Double.valueOf(curr.loc_lat), Double.valueOf(curr.loc_lng));
@@ -296,6 +188,9 @@ public class TourPreviewActivity extends AppCompatActivity
 		return minCoordinates;
 	}
 
+	/*
+	This method calculates the distance between two coordinates
+	 */
 	private double getDistance(LatLng startpoint, LatLng endpoint) {
 		Location pointA = new Location("point A");
 		pointA.setLatitude(startpoint.latitude);
@@ -305,33 +200,20 @@ public class TourPreviewActivity extends AppCompatActivity
 		pointB.setLatitude(endpoint.latitude);
 		pointB.setLongitude(endpoint.longitude);
 		return pointA.distanceTo(pointB);
-
-	}
-
-	private double deg2rad(double deg) {
-		return (deg * Math.PI / 180.0);
-	}
-
-	private double rad2deg(double rad) {
-		return (rad * 180 / Math.PI);
 	}
 
 	/**
 	 * APIWikiSummary uebernimmt die Aufgabe der Anfrage an die WikiApi um die Summary eines Standorts zurueckzugeben
 	 */
 	public class APIWikiSummary extends AsyncTask<String, Void, String> {
-
 		//private String url;
 		OkHttpClient client = new OkHttpClient();
 
-
-
-
+		/**
+		 * Wird aufgerufen, bevor der Task ausgefuehrt wird. Und setzt den Maximalwert der ProgressBar auf 100.
+		 */
 		@Override
-		protected void onPreExecute() {
-
-		}
-
+		protected void onPreExecute() {	}
 
 		/**
 		 * Wird im Hintergrund ausgefuehrt und holt sich die Daten von der API
@@ -347,8 +229,7 @@ public class TourPreviewActivity extends AppCompatActivity
 
 			Log.e(TAG, "Requested URL worked");
 
-			try
-			{
+			try {
 				//Ich führe den API aufruf aus, und wenn erfolgreich ohne Exception, returne das Ergebnis an die onPostExecute funktion.
 				Response response = client.newCall(request).execute();
 				Log.e(TAG, "executed ok http");
@@ -364,11 +245,11 @@ public class TourPreviewActivity extends AppCompatActivity
 
 		/**
 		 * Wird mehrmals von doInBackground aufgerufen, um den Fortschritt anzuzeigen.
+		 *
 		 * @param values der Wert, der den Fortschritt anzeigt
 		 */
 		protected void onProgressUpdate(Integer... values) {
-
-			Log.v("Progress","Once");
+			Log.v("Progress", "Once");
 		}
 
 		/**
@@ -377,9 +258,7 @@ public class TourPreviewActivity extends AppCompatActivity
 		 */
 		@Override
 		protected void onPostExecute(String result) {
-
 			String help = result;
-
 
 			int beginIndex = result.lastIndexOf("\"extract\":\"") + 11;
 			int endIndex = result.lastIndexOf("\"");
