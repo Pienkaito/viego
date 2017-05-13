@@ -141,7 +141,8 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 
 			String help = result;
 
-			int beginIndex = result.lastIndexOf("\"extract\":\"");
+			//int beginIndex = result.lastIndexOf("\"extract\":\"");
+			int beginIndex = result.lastIndexOf("\"extract\":\"") + 11;
 			int endIndex = result.lastIndexOf("\"");
 			String output = result.substring(beginIndex, endIndex);
 
