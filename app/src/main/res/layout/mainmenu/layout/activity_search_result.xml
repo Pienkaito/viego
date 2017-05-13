@@ -23,10 +23,12 @@
 		android:layout_height="296dp"
 		android:layout_weight="0.93"/>
 
-    <Button
-        android:id="@+id/send_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="GO To Tour Overview"/>
+	<Button
+		android:id="@+id/send_btn"
+		style="@style/Widget.AppCompat.Button.Colored"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="GO To Tour Overview"
+		android:textStyle="bold"/>
 
 </LinearLayout>
