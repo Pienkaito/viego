@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 /**
- * Created by Mourni on 5/6/2017.
+ * @author beringuelmarkanthony, mayerhubert, raphaelkolhaupt
  */
 @SuppressWarnings("serial")
 public class PlaceInfo implements Serializable {

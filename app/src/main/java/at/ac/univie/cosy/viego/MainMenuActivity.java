@@ -70,7 +70,7 @@ import okhttp3.Response;
  * <li>search_app_bar</li>
  * </ul>
  *
- * @author raphaelkolhaupt, mayerhubert, beringuelmarkanthony
+ * @author beringuelmarkanthony, mayerhubert, raphaelkolhaupt
  */
 public class MainMenuActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener,

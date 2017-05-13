@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
- * Created by Mark Anthony on 13.05.2017.
+ * @author beringuelmarkanthony, mayerhubert, raphaelkolhaupt
  */
 
 public class SingletonPosition {

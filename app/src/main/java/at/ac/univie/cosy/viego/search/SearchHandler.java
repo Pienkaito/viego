@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by Mourni on 5/6/2017.
+ * @author beringuelmarkanthony, mayerhubert, raphaelkolhaupt
  */
 // places API key AIzaSyAahAPIqHgVnBjMziAK_I8Vce0wmkEycFY
 

@@ -23,7 +23,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by Mourni on 11.05.2017.
+ * @author beringuelmarkanthony, mayerhubert, raphaelkolhaupt
  */
 
 public class AboutActivity extends AppCompatActivity {

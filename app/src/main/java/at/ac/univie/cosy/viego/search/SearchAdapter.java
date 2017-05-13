@@ -31,8 +31,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by Mourni on 07.05.2017.
  * https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
+ * @author beringuelmarkanthony, mayerhubert, raphaelkolhaupt
  */
 
 public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
