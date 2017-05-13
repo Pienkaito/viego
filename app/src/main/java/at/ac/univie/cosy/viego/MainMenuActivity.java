@@ -1,7 +1,6 @@
 package at.ac.univie.cosy.viego;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -10,13 +9,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,14 +20,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
-import org.json.JSONObject;
-import org.w3c.dom.Text;
-
 import at.ac.univie.cosy.viego.search.SearchActivity;
-import at.ac.univie.cosy.viego.search.SearchResult;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * <p>Dazu gehoerende XML-Files:</p>
@@ -70,7 +59,7 @@ import okhttp3.Response;
  * <li>search_app_bar</li>
  * </ul>
  *
- * @author raphaelkolhaupt, mayerhubert, beringuelmarkanthony
+ * @author beringuelmarkanthony, mayerhubert, raphaelkolhaupt
  */
 public class MainMenuActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener,
@@ -112,101 +101,7 @@ public class MainMenuActivity extends AppCompatActivity
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.gmap);
 		mapFragment.getMapAsync(this);
-		/*
-		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-		locationListener = new LocationListener() {
-			@Override
-			public void onLocationChanged(Location location) {
-				double lat = location.getLatitude();
-				double lon = location.getLongitude();
 
-				LatLng latLng = new LatLng(lat, lon);
-				Geocoder geocoder = new Geocoder(getApplicationContext());
-				try {
-					List<Address> addressList = geocoder.getFromLocation(lat, lon, 1);
-					String str = addressList.get(0).getLocality() + ", ";
-					str += addressList.get(0).getCountryName();
-					gMap.addMarker(new MarkerOptions()
-							.position(latLng)
-							.title(str)
-							.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_menu_send))
-					);
-					gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, maxZoomFactor));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-
-			}
-
-			@Override
-			public void onStatusChanged(String provider, int status, Bundle extras) {
-
-			}
-
-			@Override
-			public void onProviderEnabled(String provider) {
-
-			}
-
-			@Override
-			public void onProviderDisabled(String provider) {
-
-			}
-		};
-
-
-		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-			// Should we show an explanation?
-			/*if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-					Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-				LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-
-				View layout = inflater.inflate(R.layout.dialog_form, (ViewGroup) findViewById(R.id.llid));
-				//layout_root should be the name of the "top-level" layout node in the dialog_layout.xml file.
-				final EditText txtFB = (EditText) layout.findViewById(R.id.txtFB);
-
-				// Show an explanation to the user *asynchronously* -- don't block
-				// this thread waiting for the user's response! After the user
-				// sees the explanation, try again to request the permission.
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-						builder.setTitle("Location Permission Needed");
-						builder.setMessage("This app needs the Location permission, please accept to use location functionality");
-						builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialogInterface, int i) {
-								//Prompt the user once explanation has been shown
-								ActivityCompat.requestPermissions(MainMenuActivity.this,
-										new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-										MY_PERMISSIONS_REQUEST_LOCATION);
-							}
-						});
-						builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								dialog.dismiss();
-							}
-						});
-						AlertDialog dialog = builder.create();
-						dialog.show();
-
-
-			} else {
-				// No explanation needed, we can request the permission.
-				ActivityCompat.requestPermissions(this,
-						new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-						MY_PERMISSIONS_REQUEST_LOCATION);
-			}
-
-		}
-
-		if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-		} else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-		}
-		*/
 
 		//Navigation Drawer
 		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -216,38 +111,9 @@ public class MainMenuActivity extends AppCompatActivity
 		myFab.setOnClickListener(this);
 
 
-/*
-		//if jQuery != null, dann fuehre dass jQuery aus und fuelle bottom content mit den Daten und mach die View
-		//Visible, ansonst unten weiter
-		//https://en.wikipedia.org/w/api.php?action=query&format=json&list=geosearch&titles=Stephansdom&gscoord=48.224368%7C16.353041&gsradius=10000&gslimit=10
-		String jString = null;
-		String url = null;
-		String titleOfstandort = "Stephansdom";
-		String latitude = "48.224368";
-		String longitude = "16.353041";
+		bottom_content = (LinearLayout) findViewById(R.id.mainmenu_bottom_content);
+		bottom_content.setVisibility(View.GONE);
 
-		url = "https://en.wikipedia.org/w/api.php?" + "action=query&format==json&list=geosearch&titles=" +
-				titleOfstandort + "&gscoord=" + latitude + "|" + longitude + "&gsradius=10000&gslimit=10"
-		;
-
-			//Hide Bottom
-			JSONObject json = null;
-			try {
-				json = new JSONObject(jString);
-				JSONArray results = json.getJSONArray("results");
-
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}*/
-
-
-		if(getCallingActivity() == null)
-		{
-			//ansonst
-			//Hide Bottom
-			bottom_content = (LinearLayout) findViewById(R.id.mainmenu_bottom_content);
-			bottom_content.setVisibility(View.GONE);
-		}
 
 	}
 
@@ -261,14 +127,7 @@ public class MainMenuActivity extends AppCompatActivity
 		}
 	}
 
-
-	//WIEDER LOESCHEN, nur fuer die Weiterleitung durch Button zur naechsten Activity!!!!!!!!
-	public void buttonClickFunction(View v) {
-		if (v.getId() == R.id.bottom_btn_1) {
-			Intent intent = new Intent(this, SearchActivity.class);
-			startActivity(intent);
-		}
-	}
+	
 
 	/*
 	Sets the app bar drawer with the elements from R.menu.search_app_bar

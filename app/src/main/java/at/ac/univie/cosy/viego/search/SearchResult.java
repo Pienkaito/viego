@@ -33,7 +33,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by Mourni on 07.05.2017.
+ * @author beringuelmarkanthony, mayerhubert, raphaelkolhaupt
  */
 
 public class SearchResult extends AppCompatActivity{

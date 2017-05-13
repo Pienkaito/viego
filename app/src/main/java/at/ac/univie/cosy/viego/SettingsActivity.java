@@ -18,7 +18,7 @@ import static android.app.PendingIntent.getActivity;
 
 
 /**
- * Created by Mourni on 11.05.2017.
+ * @author beringuelmarkanthony, mayerhubert, raphaelkolhaupt
  */
 
 /*
