@@ -240,7 +240,7 @@ public class MainMenuActivity extends AppCompatActivity
 				e.printStackTrace();
 			}*/
 
-		Intent intent = getIntent();
+
 		if(getCallingActivity() == null)
 		{
 			//ansonst

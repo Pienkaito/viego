@@ -111,7 +111,7 @@ public class TourPreviewActivity extends AppCompatActivity
 	"Austrian_National_Library", "Wotruba_Church"};
 
 	String url = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles="
-			+ ""
+			+ exactWikiArticle[random]
 			;
 
 	@Override
