@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+												 xmlns:app="http://schemas.android.com/apk/res-auto"
+												 xmlns:tools="http://schemas.android.com/tools"
+												 android:layout_width="match_parent"
+												 android:layout_height="match_parent"
+												 tools:context="at.ac.univie.cosy.viego.MainMenuActivity">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
+
+		<android.support.design.widget.AppBarLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:fitsSystemWindows="false"
+			android:theme="@style/AppTheme.AppBarOverlay"
+			app:expanded="false">
+
+			<android.support.v7.widget.Toolbar
+				android:id="@+id/toolbar"
+				android:layout_width="match_parent"
+				android:layout_height="?attr/actionBarSize"
+				android:background="?attr/colorPrimary"
+				app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+		</android.support.design.widget.AppBarLayout>
+
+		<android.support.constraint.ConstraintLayout
+			android:id="@+id/tourpreview_loading"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:visibility="visible">
+
+			<ProgressBar
+				android:id="@+id/tourpreview_loadingbar"
+				style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+				android:layout_width="300dp"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="8dp"
+				android:layout_marginEnd="8dp"
+				android:layout_marginLeft="8dp"
+				android:layout_marginRight="8dp"
+				android:layout_marginStart="8dp"
+				android:layout_marginTop="8dp"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintLeft_toLeftOf="parent"
+				app:layout_constraintRight_toRightOf="parent"
+				app:layout_constraintTop_toTopOf="parent"/>
+
+			<TextView
+				android:id="@+id/textView4"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginEnd="8dp"
+				android:layout_marginLeft="8dp"
+				android:layout_marginRight="8dp"
+				android:layout_marginStart="8dp"
+				android:layout_marginTop="16dp"
+				android:text="Calculating path..."
+				android:textSize="30sp"
+				app:layout_constraintHorizontal_bias="0.503"
+				app:layout_constraintLeft_toLeftOf="parent"
+				app:layout_constraintRight_toRightOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/tourpreview_loadingbar"/>
+
+			<Button
+				android:id="@+id/tourpreview_btn"
+				style="@style/Widget.AppCompat.Button"
+				android:layout_width="165dp"
+				android:layout_height="51dp"
+				android:layout_marginEnd="8dp"
+				android:layout_marginLeft="8dp"
+				android:layout_marginRight="8dp"
+				android:layout_marginStart="8dp"
+				android:layout_marginTop="11dp"
+				android:text="Cancel"
+				app:layout_constraintHorizontal_bias="0.502"
+				app:layout_constraintLeft_toLeftOf="parent"
+				app:layout_constraintRight_toRightOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/textView4"/>
+
+		</android.support.constraint.ConstraintLayout>
+
+		<LinearLayout
+			android:id="@+id/tourpreview_content"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical"
+			android:visibility="gone"
+			tools:layout_editor_absoluteX="8dp"
+			tools:layout_editor_absoluteY="8dp">
+
+			<include
+				android:id="@+id/tourpreview_map"
+				layout="@layout/mainmenu_content"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				/>
+
+			<include
+				android:id="@+id/tourpreview_bottom_content"
+				layout="@layout/mainmenu_bottom_content"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				tools:layout_editor_absoluteX="8dp"
+				tools:layout_editor_absoluteY="25dp"/>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

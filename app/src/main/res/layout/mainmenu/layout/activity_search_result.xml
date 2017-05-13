@@ -11,7 +11,7 @@
         android:layout_height="451dp" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/send_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="GO To Tour Overview"/>

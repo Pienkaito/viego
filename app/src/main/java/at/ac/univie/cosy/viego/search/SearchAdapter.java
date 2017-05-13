@@ -19,8 +19,11 @@ import android.widget.Toast;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import at.ac.univie.cosy.viego.MainMenuActivity;
 import at.ac.univie.cosy.viego.R;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -36,7 +39,7 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 	//TO-DO zu diesem Array sollten die Namen hinzugefuegt werden, die durch Klick auf den Add Button zur Tour
 	//hinzugefuegt werden sollten
 	public final static String apikey = "AIzaSyAahAPIqHgVnBjMziAK_I8Vce0wmkEycFY";
-	ArrayList<PlaceInfo> tourPlaceInfos = new ArrayList<PlaceInfo>();
+	HashSet<PlaceInfo> tourPlaceInfos = new HashSet<PlaceInfo>();
 
 	public SearchAdapter(Context context, int textViewResourceId) {
 		super(context, textViewResourceId);
@@ -85,7 +88,16 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 					PlaceInfo objectinfo = getItem(position);
 					tourPlaceInfos.add(objectinfo);
 					Toast.makeText(getContext(), "You clicked a button yay", Toast.LENGTH_LONG).show();
+				}
+			});
 
+			Button send_button = (Button) v.findViewById(R.id.send_btn);
+			send_button.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					Intent i = new Intent(view.getContext(), MainMenuActivity.class);
+					i.putExtra("tourPlaceInfos", tourPlaceInfos);
+					view.getContext().startActivity(i);
 				}
 
 			});
