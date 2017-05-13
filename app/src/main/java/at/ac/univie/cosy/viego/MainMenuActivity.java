@@ -101,7 +101,7 @@ public class MainMenuActivity extends AppCompatActivity
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.gmap);
 		mapFragment.getMapAsync(this);
-		
+
 
 		//Navigation Drawer
 		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -127,14 +127,7 @@ public class MainMenuActivity extends AppCompatActivity
 		}
 	}
 
-
-	//WIEDER LOESCHEN, nur fuer die Weiterleitung durch Button zur naechsten Activity!!!!!!!!
-	public void buttonClickFunction(View v) {
-		if (v.getId() == R.id.bottom_btn_1) {
-			Intent intent = new Intent(this, SearchActivity.class);
-			startActivity(intent);
-		}
-	}
+	
 
 	/*
 	Sets the app bar drawer with the elements from R.menu.search_app_bar
