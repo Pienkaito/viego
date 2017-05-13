@@ -18,7 +18,7 @@ class SingletonPosition {
 
 	private static final SingletonPosition ourInstance = new SingletonPosition();
 
-	static SingletonPosition getInstance() {
+	public static SingletonPosition getInstance() {
 		return ourInstance;
 	}
 

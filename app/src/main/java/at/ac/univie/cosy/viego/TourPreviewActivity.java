@@ -272,7 +272,7 @@ public class TourPreviewActivity extends AppCompatActivity
 		for (PlaceInfo x : list) {
 			LatLng endpoint = new LatLng(Double.valueOf(x.loc_lat), Double.valueOf(x.loc_lng));
 			double calc = getDistance(startpoint, endpoint);
-			if (minDistance > calc) {
+			if ((calc == 0) || (minDistance > calc)) {
 				shortestPlace = x;
 				minCoordinates = endpoint;
 				minDistance = calc;
