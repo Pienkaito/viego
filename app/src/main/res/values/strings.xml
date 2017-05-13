@@ -18,13 +18,21 @@
     <string name="radio_museum">Museum</string>
     <string name="search_radius">Search radius</string>
     <string name="no_result">No Results. Please try again.</string>
-    <string-array name="radius_array">
+    <string-array name="radius_array_km">
         <item>500</item>
         <item>1000</item>
         <item>1500</item>
         <item>2000</item>
         <item>2500</item>
         <item>3000</item>
+    </string-array>
+    <string-array name="radius_array_miles">
+        <item>0.5</item>
+        <item>1.0</item>
+        <item>1.5</item>
+        <item>2.0</item>
+        <item>2.5</item>
+        <item>3.0</item>
     </string-array>
 
     <string name="about_text">This app has been programmed by:</string>
