@@ -246,7 +246,11 @@ public class MainMenuActivity extends AppCompatActivity
 		}
 		else
 			{
-				TextView output_bottom = (TextView) findViewById(R.id.mainmenu_bottom_content);
+				//TextView output_bottom = (TextView) findViewById(R.id.mainmenu_bottom_content);
+				//View header = nav_view.getHeaderView(0);
+				View test1View = findViewById(R.id.mainmenu_bottom_content);
+				TextView output_bottom = (TextView) test1View.findViewById(R.id.mainmenu_bottom_contenttextview);
+
 				String output = intent.getStringExtra(AboutActivity.API_CALL_MESSAGE);
 
 				output_bottom.setText(output);

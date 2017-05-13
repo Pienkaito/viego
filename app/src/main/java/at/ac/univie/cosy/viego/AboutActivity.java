@@ -83,6 +83,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 	public class APIWikiSummary extends AsyncTask<String, Void, String> {
 
 		//private String url;
+		OkHttpClient client = new OkHttpClient();
 
 
 
@@ -98,40 +99,26 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 
 		@Override
 		protected String doInBackground(String... params) {
-			String output = "";
+			Request.Builder builder = new Request.Builder();
+			//Ich nehme die URL und mache eine request
+			builder.url(params[0]);
+			Request request = builder.build();
 
-			try {
+			Log.e(TAG, "Requested URL worked");
 
-				InputStream in = new URL(url).openStream();
+			try
+			{
+				//Ich führe den API aufruf aus, und wenn erfolgreich ohne Exception, returne das Ergebnis an die onPostExecute funktion.
+				Response response = client.newCall(request).execute();
+				Log.e(TAG, "executed ok http");
+				return response.body().string();
 
-
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
-
-
-				String line;
-				while ((line = bufferedReader.readLine()) != null) {
-
-					if (line.contains("\"title\": ") && line.contains(exactWikiArticle)) {
-						line = bufferedReader.readLine();
-						if(line.contains("\"extract\": \""))
-						{
-							int beginIndex = line.lastIndexOf("\"extract\": \"");
-							int endIndex = line.lastIndexOf(beginIndex, '\"');
-							output = line.substring(beginIndex, endIndex);
-						}
-					}
-				}
-				bufferedReader.close();
-				in.close();
-
-
-			} catch (Exception e) {
-				Log.e("tag", "Exception: " + Log.getStackTraceString(e));
-				return null;
+			} catch (Exception e) //Exception if call fails.
+			{
+				Log.e(TAG, "API Call failed");
+				Log.e(TAG, e.getMessage());
 			}
-
-
-			return output;
+			return null;
 		}
 
 		/**
@@ -152,7 +139,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 		@Override
 		protected void onPostExecute(String result) {
 
-
+			String hels = result;
 			//Ich speichere die Informationen im internal storage und gebe sie an die ResultActivity weiter.
 			Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
 			intent.putExtra(API_CALL_MESSAGE, result);
