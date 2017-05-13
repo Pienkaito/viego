@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import at.ac.univie.cosy.viego.R;
+import at.ac.univie.cosy.viego.TourPreviewActivity;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -57,7 +59,7 @@ public class SearchResult extends Activity{
 
 		  listview = (ListView) findViewById(R.id.search_results);
 
-		  SearchAdapter adapter = new SearchAdapter(this, android.R.layout.simple_list_item_1, searchresult);
+		  final SearchAdapter adapter = new SearchAdapter(this, android.R.layout.simple_list_item_1, searchresult);
 		  listview.setAdapter(adapter);
 		 /* listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			  @Override
@@ -66,8 +68,20 @@ public class SearchResult extends Activity{
 				  Toast.makeText(getBaseContext(),parent.getItemAtPosition(position)+"is selected", Toast.LENGTH_LONG).show();
 			  }
 		  });*/
+		  Button send_button = (Button) findViewById(R.id.send_btn);
+		  send_button.setOnClickListener(new View.OnClickListener() {
+			  @Override
 
+			  //TODO  I MOVED THE CLICK LISTENER HERE AND CHANGED ADAPTER TO FINAL
+			  public void onClick(View view) {
+				  Intent i = new Intent(view.getContext(), TourPreviewActivity.class);
+				  i.putExtra("tourPlaceInfos", adapter.tourPlaceInfos);
+				  view.getContext().startActivity(i);
+			  }
+
+		  });
 	  }
+
       catch (JSONException e){
         //  nowloading.setVisibility(View.GONE);
           Log.e(TAG, "JSON Konvertierung failed");

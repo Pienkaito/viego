@@ -92,16 +92,7 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 				}
 			});
 
-			Button send_button = (Button) v.findViewById(R.id.send_btn);
-			send_button.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					Intent i = new Intent(view.getContext(), TourPreviewActivity.class);
-					i.putExtra("tourPlaceInfos", tourPlaceInfos);
-					view.getContext().startActivity(i);
-				}
 
-			});
 
 
 		}
