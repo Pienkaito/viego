@@ -79,13 +79,16 @@ public class MainMenuActivity extends AppCompatActivity
 	private static final float minZoomFactor = 15.0f;
 	private static final float maxZoomFactor = 18.0f;
 	private GoogleMap gMap;
-	private LatLng curcoord = new LatLng(48.208456, 16.373130);
+	private LatLng curcoord = null;
 	private LinearLayout bottom_content;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mainmenu_layout_with_nav);
+
+		SingletonPosition singleton = SingletonPosition.getInstance();
+		curcoord = new LatLng(singleton.getCurrentlat(), singleton.getCurrentlong());
 
 		//App Bar init
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
