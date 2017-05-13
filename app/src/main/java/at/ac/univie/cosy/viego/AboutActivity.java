@@ -26,19 +26,11 @@ import okhttp3.Response;
  * Created by Mourni on 11.05.2017.
  */
 
-public class AboutActivity extends AppCompatActivity implements View.OnClickListener {
+public class AboutActivity extends AppCompatActivity {
 	//ActionBar actionBar = getActionBar();
 
 	//kommt dann in TourPreview!!!!!!!!!!!!!
 	public static final String TAG = "Mainmenu Activity Log";
-	public static final String API_CALL_MESSAGE = "API_WikiMESSAGE";
-	public static final int REQUEST_CODE = 123;
-	String exactWikiArticle = "St. Stephen's Cathedral, Vienna";
-	String url = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles="
-			+ exactWikiArticle
-	;
-	Button button;
-
 	//ads
 	//https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles=St. Stephen's Cathedral, Vienna
 	//kommt dann in TourPreview!!!!!!!!!!!!!
@@ -50,8 +42,6 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_about);
 
-		button = (Button) findViewById(R.id.about_bottomc);
-		button.setOnClickListener(this);
 		//actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 
@@ -60,14 +50,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 
 
 
-	@Override
-	public void onClick(View view) {
-		Intent i = new Intent(getApplicationContext(), MainMenuActivity.class);
-		//i.putExtra("tourPlaceInfos", adapter.tourPlaceInfos);
-		APIWikiSummary APIWikiSummary = new APIWikiSummary();
-		APIWikiSummary.execute(url);
 
-	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -78,80 +61,6 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
-		}
-	}
-
-	public class APIWikiSummary extends AsyncTask<String, Void, String> {
-
-		//private String url;
-		OkHttpClient client = new OkHttpClient();
-
-
-
-		/**
-		 * Wird aufgerufen, bevor der Task ausgefuehrt wird. Und setzt den Maximalwert der ProgressBar auf 100.
-		 */
-		@Override
-		protected void onPreExecute() {
-
-		}
-
-
-
-		@Override
-		protected String doInBackground(String... params) {
-			Request.Builder builder = new Request.Builder();
-			//Ich nehme die URL und mache eine request
-			builder.url(params[0]);
-			Request request = builder.build();
-
-			Log.e(TAG, "Requested URL worked");
-
-			try
-			{
-				//Ich führe den API aufruf aus, und wenn erfolgreich ohne Exception, returne das Ergebnis an die onPostExecute funktion.
-				Response response = client.newCall(request).execute();
-				Log.e(TAG, "executed ok http");
-				return response.body().string();
-
-			} catch (Exception e) //Exception if call fails.
-			{
-				Log.e(TAG, "API Call failed");
-				Log.e(TAG, e.getMessage());
-			}
-			return null;
-		}
-
-		/**
-		 * Wird mehrmals von doInBackground aufgerufen, um den Fortschritt anzuzeigen.
-		 * @param values der Wert, der den Fortschritt anzeigt
-		 */
-		protected void onProgressUpdate(Integer... values) {
-
-			Log.v("Progress","Once");
-		}
-
-		/**
-		 * Wird nachdem Beenden der Methode doInBackground aufgerufen und berechnet anhand des uebergebenen result
-		 * den Prozentsatz an ausgeliehenen Raedern. Außerdem wird die Progressbar wieder versteckt.
-		 * @param result beinhaltet den String mit der Anzahl der Summe an EmptySlots und FreeBikes,
-		 * der von doInBackground returned worden ist.
-		 */
-		@Override
-		protected void onPostExecute(String result) {
-
-			String help = result;
-
-			//int beginIndex = result.lastIndexOf("\"extract\":\"");
-			int beginIndex = result.lastIndexOf("\"extract\":\"") + 11;
-			int endIndex = result.lastIndexOf("\"");
-			String output = result.substring(beginIndex, endIndex);
-
-			Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
-			intent.putExtra(API_CALL_MESSAGE, output);
-			startActivityForResult(intent, REQUEST_CODE);
-			//output.setText(String.format("%.2f %%", percentage ) );
-			//progressBar.setVisibility(View.INVISIBLE);
 		}
 	}
 
