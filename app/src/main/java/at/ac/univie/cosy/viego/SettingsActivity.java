@@ -21,18 +21,6 @@ import static android.app.PendingIntent.getActivity;
  * @author beringuelmarkanthony, mayerhubert, raphaelkolhaupt
  */
 
-/*
-ADD TO SEARCH ACTIVITY
-String settingsTAG = "AppNameSettings";
-SharedPreferences prefs = getSharedPreferences(settingsTAG, 0);
-boolean miles = prefs.getBoolean("miles", false);
-if(miles == true){
-    populate array with mile stuff
-    Textview meter says "Miles" instead.
-
-    if(miles== true) distance = miles * 1,6 oder so
-}
- */
 
 public class SettingsActivity extends AppCompatActivity {
 	private String settingsTAG = "ViegoSettings";
@@ -62,7 +50,6 @@ public class SettingsActivity extends AppCompatActivity {
 				editor.putBoolean("km", km.isChecked());
 				editor.putBoolean("miles", miles.isChecked());
 				editor.commit();
-
 				finish();
 
 			}
@@ -73,7 +60,7 @@ public class SettingsActivity extends AppCompatActivity {
 	public boolean onOptionsItemSelected (MenuItem item){
 		switch (item.getItemId()) {
 			case android.R.id.home:
-				// app icon in action bar clicked; goto parent activity.
+				// If we click the back button, we close the activity and return to the previous.
 				this.finish();
 				return true;
 			default:
@@ -81,44 +68,3 @@ public class SettingsActivity extends AppCompatActivity {
 		}
 	}
 }
-
-/*
-public class SettingsActivity extends AppCompatActivity {
-
-	protected void onCreate(Bundle savedInstanceState) {
-
-
-		super.onCreate(savedInstanceState);
-
-		setContentView(R.layout.activity_settings);
-
-
-	}
-
-	public void onRadioButtonClicked(View view) {
-		Context context = getApplicationContext();
-		SharedPreferences sharedPref = context.getSharedPreferences(
-				String.valueOf(R.string.pref_format), Context.MODE_PRIVATE
-		);
-
-		SharedPreferences.Editor editor = sharedPref.edit();
-
-		// Is the button now checked?
-		boolean checked = ((RadioButton) view).isChecked();
-
-		// Check which radio button was clicked
-		switch(view.getId()) {
-			case R.id.settings_radio_km:
-				if (checked)
-					editor.putString(String.valueOf(R.string.pref_format), "km");
-					editor.commit();
-				break;
-			case R.id.settings_radio_miles:
-				if (checked)
-					editor.putString(String.valueOf(R.string.pref_format), "miles");
-				editor.commit();
-				break;
-		}
-	}
-}
-*/

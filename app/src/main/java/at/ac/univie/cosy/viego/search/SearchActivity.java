@@ -5,26 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
+
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.json.JSONException;
 
 import at.ac.univie.cosy.viego.R;
 import at.ac.univie.cosy.viego.SingletonPosition;
@@ -32,7 +26,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import at.ac.univie.cosy.viego.R;
 
 /**
  * Dazu gehoerende XML-Files:<br>
@@ -47,25 +40,30 @@ public class SearchActivity extends AppCompatActivity {
     ProgressBar nowloading;
     String selected_category = null;
     Spinner spinner_radius;
+    //the name for our shared pref data
     String settingsTAG = "ViegoSettings";
     TextView type;
 
     public final static String API_CALL_MESSAGE = "API_MESSAGE";
-
-    public static final String TAG = "Main Activity Log";
+    public static final String TAG = "Search Activity LOG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        // I load the settings for miles/km
         SharedPreferences prefs = getSharedPreferences(settingsTAG, 0);
         boolean miles = prefs.getBoolean("miles", false);
-        // Hole mir die progressbar vom view und mach sie unsichtbar.
+
+        // I turn the progressbar invisible.
         nowloading = (ProgressBar)findViewById(R.id.search_progressbar);
         nowloading.setVisibility(View.GONE);
-        //Checke welches Format verwendet wird und setze den spinner entsprechend
+
+        //I define the textview that either says km or mile.
         type = (TextView)findViewById(R.id.text_type);
-        // Define Spinner, apply spinner adapter to spinner to fill with values form the array
+
+        // Define Spinner, apply spinner adapter to spinner to fill with values from the array depending on the settings miles or km
         spinner_radius = (Spinner) findViewById(R.id.spinner_umkreis);
         if(miles) {
             type.setText("miles");
@@ -80,8 +78,8 @@ public class SearchActivity extends AppCompatActivity {
             spinner_radius.setAdapter(adapter);
         }
     }
-
 	@Override
+	
 	public boolean onOptionsItemSelected (MenuItem item){
 		switch (item.getItemId()) {
 			case android.R.id.home:
@@ -140,7 +138,6 @@ public class SearchActivity extends AppCompatActivity {
                         ;
                         // lat 48.220071   long 16.356277
                     }
-
                     // NO CATEGORY
                     else
                     {
@@ -215,7 +212,6 @@ public class SearchActivity extends AppCompatActivity {
             //Ich nehme die URL und mache eine request
             builder.url(params[0]);
             Request request = builder.build();
-
 
             try {
                 //Ich führe den API aufruf aus, und wenn erfolgreich ohne Exception, returne das Ergebnis an die onPostExecute funktion.

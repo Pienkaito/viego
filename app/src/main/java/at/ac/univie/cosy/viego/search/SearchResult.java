@@ -1,47 +1,34 @@
 package at.ac.univie.cosy.viego.search;
 
-import android.app.Activity;
-import android.content.Context;
+
 import android.content.Intent;
-import android.os.AsyncTask;
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONException;
-
-import java.nio.BufferUnderflowException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import at.ac.univie.cosy.viego.R;
 import at.ac.univie.cosy.viego.TourPreviewActivity;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
- * @author beringuelmarkanthony, mayerhubert, raphaelkolhaupt
+ * Dazu gehoerende XML-Files:<br>
+ *     -acitivity_search_result<br>
+ *      list_item_place
+ * @author raphaelkolhaupt, mayerhubert, beringuelmarkanthony
  */
 
 public class SearchResult extends AppCompatActivity{
 
-    // to add:  kurzer code damit die placeresults aus dem API call an diese class weitergegeben werden.
     ListView listview;
-    //ProgressBar nowloading;
-    private static final String TAG = "Main Activity Log";
+    private static final String TAG = "Search Result Log";
 	TextView no_result;
 
   @Override
@@ -49,24 +36,30 @@ public class SearchResult extends AppCompatActivity{
       super.onCreate(savedInstanceState);
 	  setContentView(R.layout.activity_search_result);
 
+	  //I set set the actionbar so that it has a back-button
 	  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+	  //I call the intent
       Intent intent = getIntent();
 	  try {
+		  //I get the reply from the API from the intent and start the JSON Handler for the search results:
 		  String api_response = intent.getStringExtra(SearchActivity.API_CALL_MESSAGE);
 		  Log.i(TAG, "API wurde aufgerufen!");
 		  Log.i(TAG, api_response);
+		  //I Parse the searchresults and put them into a PlaceInfo List.
 		  List<PlaceInfo> searchresult = SearchHandler.getPlaceInformation(api_response);
 		  no_result = (TextView)findViewById(R.id.text_noresults);
+
+		  // If we didn't get any search results, we set no results message to visible.
 		  if (searchresult.isEmpty())
 		  		no_result.setVisibility(View.VISIBLE);
 
-
+		  // I use my custom adapter (SearchAdapter) to turn each PlaceInfo object into a listview item.
 		  listview = (ListView) findViewById(R.id.search_results);
-
 		  final SearchAdapter adapter = new SearchAdapter(this, android.R.layout.simple_list_item_1, searchresult);
 		  listview.setAdapter(adapter);
 
+		  //Once the user has selected all the Placeinfos he can click the button to send them.
 		  Button send_button = (Button) findViewById(R.id.send_btn);
 		  send_button.setOnClickListener(new View.OnClickListener() {
 			  @Override
@@ -82,19 +75,16 @@ public class SearchResult extends AppCompatActivity{
 
 		  });
 	  }
-
       catch (JSONException e){
           Log.e(TAG, "JSON Konvertierung failed");
           Log.e(TAG, e.getMessage());
       }
-
-
   }
 
 	public boolean onOptionsItemSelected (MenuItem item){
 		switch (item.getItemId()) {
 			case android.R.id.home:
-				// app icon in action bar clicked; goto parent activity.
+				// If we click the back button, we close the activity and return to the previous.
 				this.finish();
 				return true;
 			default:
