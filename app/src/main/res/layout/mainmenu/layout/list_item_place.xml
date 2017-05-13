@@ -8,11 +8,13 @@
     <ImageView
         android:id="@+id/img_place"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginRight="6dip"
         android:layout_toStartOf="@+id/list_button_add"
         android:contentDescription="Image"
+        android:minHeight="100dp"
+        android:minWidth="100dp"
         android:src="@drawable/ic_menu_camera"/>
 
     <TextView
@@ -33,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/img_place"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentBottom="false"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/text_place_name"
         android:layout_toStartOf="@+id/img_place"
@@ -45,12 +47,14 @@
 
     <Button
         android:id="@+id/list_button_add"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:onClick="ListClickHandler"
         android:text="Add"
-        android:onClick="ListClickHandler"/>
+        />
 
 </RelativeLayout>
