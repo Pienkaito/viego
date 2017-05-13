@@ -241,13 +241,10 @@ public class MainMenuActivity extends AppCompatActivity
 			}*/
 
 
-		if(getCallingActivity() == null)
-		{
-			//ansonst
-			//Hide Bottom
+
 			bottom_content = (LinearLayout) findViewById(R.id.mainmenu_bottom_content);
 			bottom_content.setVisibility(View.GONE);
-		}
+		
 
 	}
 
