@@ -51,6 +51,10 @@
 			android:name=".SettingsActivity"
 			android:label="Settings">
 		</activity>
+		<activity
+			android:name=".TourPreviewActivity"
+			android:label="TourPreviewActivity">
+		</activity>
 	</application>
 
 </manifest>
