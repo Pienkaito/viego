@@ -102,9 +102,16 @@ public class TourPreviewActivity extends AppCompatActivity
 	public static final String TAG = "Mainmenu Activity Log";
 	public static final String API_CALL_MESSAGE = "API_WikiMESSAGE";
 	public static final int REQUEST_CODE = 123;
-	String exactWikiArticle = "St. Stephen's Cathedral, Vienna";
+
+
+	int random = (int )(Math.random() * 10);
+
+	String[] exactWikiArticle = {"St. Stephen's Cathedral, Vienna", "Karlsplatz", "Volkstheater,_Vienna",
+	"Gasometer,_Vienna", "TU_Wien", "Wiener_Riesenrad", "Albertina", "Natural_History_Museum,_Vienna",
+	"Austrian_National_Library", "Wotruba_Church"};
+
 	String url = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles="
-			+ exactWikiArticle
+			+ ""
 			;
 
 	@Override
