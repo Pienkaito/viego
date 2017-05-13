@@ -316,6 +316,9 @@ public class TourPreviewActivity extends AppCompatActivity
 		return (rad * 180 / Math.PI);
 	}
 
+	/**
+	 * APIWikiSummary uebernimmt die Aufgabe der Anfrage an die WikiApi um die Summary eines Standorts zurueckzugeben
+	 */
 	public class APIWikiSummary extends AsyncTask<String, Void, String> {
 
 		//private String url;
@@ -323,9 +326,7 @@ public class TourPreviewActivity extends AppCompatActivity
 
 
 
-		/**
-		 * Wird aufgerufen, bevor der Task ausgefuehrt wird. Und setzt den Maximalwert der ProgressBar auf 100.
-		 */
+
 		@Override
 		protected void onPreExecute() {
 
@@ -367,10 +368,8 @@ public class TourPreviewActivity extends AppCompatActivity
 		}
 
 		/**
-		 * Wird nachdem Beenden der Methode doInBackground aufgerufen und berechnet anhand des uebergebenen result
-		 * den Prozentsatz an ausgeliehenen Raedern. Außerdem wird die Progressbar wieder versteckt.
-		 * @param result beinhaltet den String mit der Anzahl der Summe an EmptySlots und FreeBikes,
-		 * der von doInBackground returned worden ist.
+		 * Wird nachdem Beenden der Methode doInBackground aufgerufen
+		 * @param result beinhaltet den String der von der URL uebertragenen
 		 */
 		@Override
 		protected void onPostExecute(String result) {
@@ -388,9 +387,6 @@ public class TourPreviewActivity extends AppCompatActivity
 			output_bottom.setMovementMethod(new ScrollingMovementMethod());
 
 			output_bottom.setText(output);
-
-			//output.setText(String.format("%.2f %%", percentage ) );
-			//progressBar.setVisibility(View.INVISIBLE);
 		}
 	}
 

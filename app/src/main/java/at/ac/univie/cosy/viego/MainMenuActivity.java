@@ -127,7 +127,7 @@ public class MainMenuActivity extends AppCompatActivity
 		}
 	}
 
-	
+
 
 	/*
 	Sets the app bar drawer with the elements from R.menu.search_app_bar
