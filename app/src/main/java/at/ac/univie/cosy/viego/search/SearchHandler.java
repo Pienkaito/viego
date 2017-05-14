@@ -17,37 +17,36 @@ import java.util.List;
 
 public class SearchHandler {
 
-    public static List<PlaceInfo> getPlaceInformation (String jString) throws JSONException
-    {
-        //Turn the string into a Json to parse.
-        JSONObject json = new JSONObject(jString);
-        //We always have to take this step. If i do it once here we don't have to redo it.
-        JSONArray results = json.getJSONArray("results");
+	public static List<PlaceInfo> getPlaceInformation(String jString) throws JSONException {
+		//Turn the string into a Json to parse.
+		JSONObject json = new JSONObject(jString);
+		//We always have to take this step. If i do it once here we don't have to redo it.
+		JSONArray results = json.getJSONArray("results");
 
-        List<PlaceInfo> returninfo = new LinkedList<>();
+		List<PlaceInfo> returninfo = new LinkedList<>();
 
-        for (int i=0; i< results.length(); i++){
+		for (int i = 0; i < results.length(); i++) {
 			PlaceInfo nextitem = new PlaceInfo();
 
-            //These fields alwys exist.
-            nextitem.place_name = results.getJSONObject(i).getString("name");
-            nextitem.place_id = results.getJSONObject(i).getString("place_id");
+			//These fields alwys exist.
+			nextitem.place_name = results.getJSONObject(i).getString("name");
+			nextitem.place_id = results.getJSONObject(i).getString("place_id");
 
-            //These fields could be missing
-            if(results.getJSONObject(i).has("vicinity"))
-                nextitem.formatted_address = results.getJSONObject(i).getString("vicinity");
-            if(results.getJSONObject(i).has("rating"))
-                nextitem.place_rating = results.getJSONObject(i).getString("rating");
-            if(results.getJSONObject(i).has("photos")) {
-                if (results.getJSONObject(i).getJSONArray("photos").getJSONObject(0).has("photo_reference"))
-                    nextitem.place_img_id = results.getJSONObject(i).getJSONArray("photos").getJSONObject(0).getString("photo_reference");
-            }
-                if(results.getJSONObject(i).getJSONObject("geometry").has("location")) {
-                nextitem.loc_lat = results.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getString("lat");
-                nextitem.loc_lng = results.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getString("lng");
-            }
-                returninfo.add(nextitem);
-        }
-        return returninfo;
-    }
+			//These fields could be missing
+			if (results.getJSONObject(i).has("vicinity"))
+				nextitem.formatted_address = results.getJSONObject(i).getString("vicinity");
+			if (results.getJSONObject(i).has("rating"))
+				nextitem.place_rating = results.getJSONObject(i).getString("rating");
+			if (results.getJSONObject(i).has("photos")) {
+				if (results.getJSONObject(i).getJSONArray("photos").getJSONObject(0).has("photo_reference"))
+					nextitem.place_img_id = results.getJSONObject(i).getJSONArray("photos").getJSONObject(0).getString("photo_reference");
+			}
+			if (results.getJSONObject(i).getJSONObject("geometry").has("location")) {
+				nextitem.loc_lat = results.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getString("lat");
+				nextitem.loc_lng = results.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getString("lng");
+			}
+			returninfo.add(nextitem);
+		}
+		return returninfo;
+	}
 }

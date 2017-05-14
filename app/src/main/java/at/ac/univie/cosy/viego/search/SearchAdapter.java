@@ -1,7 +1,6 @@
 package at.ac.univie.cosy.viego.search;
 
 import android.content.Context;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -18,10 +17,13 @@ import android.widget.Toast;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;
+
 import at.ac.univie.cosy.viego.R;
+
 /**
  * Dazu gehoerende XML-Files:<br>
- *    list_item_place<br>
+ * list_item_place<br>
+ *
  * @author raphaelkolhaupt, mayerhubert, beringuelmarkanthony
  */
 
@@ -80,8 +82,6 @@ public class SearchAdapter extends ArrayAdapter<PlaceInfo> {
 					Toast.makeText(getContext(), "Destination has been added to the Tour!", Toast.LENGTH_LONG).show();
 				}
 			});
-
-
 
 
 		}

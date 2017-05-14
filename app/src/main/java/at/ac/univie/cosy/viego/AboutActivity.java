@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 /**
  * AboutActivity beinhaltet Beschreibung der App
+ *
  * @author beringuelmarkanthony, mayerhubert, raphaelkolhaupt
  */
 

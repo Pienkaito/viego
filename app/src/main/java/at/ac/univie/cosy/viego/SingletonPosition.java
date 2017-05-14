@@ -5,22 +5,17 @@ import java.math.RoundingMode;
 
 /**
  * <p>This class exists for testing purposes and generates random coordinates inside of Vienna</p> *
+ *
  * @author beringuelmarkanthony, mayerhubert, raphaelkolhaupt
  */
 public class SingletonPosition {
+	private static final SingletonPosition ourInstance = new SingletonPosition();
 	private double minlongitude = 16.348924;
 	private double maxlongitude = 16.392974;
 	private double minlatitude = 48.193283;
 	private double maxlatitude = 48.221780;
-
 	private double currentlong = 0;
 	private double currentlat = 0;
-
-	private static final SingletonPosition ourInstance = new SingletonPosition();
-
-	public static SingletonPosition getInstance() {
-		return ourInstance;
-	}
 
 	private SingletonPosition() {
 
@@ -31,6 +26,10 @@ public class SingletonPosition {
 		currentlong = bd.setScale(6, RoundingMode.HALF_UP).doubleValue();
 		bd = new BigDecimal(currentlat);
 		currentlat = bd.setScale(6, RoundingMode.HALF_UP).doubleValue();
+	}
+
+	public static SingletonPosition getInstance() {
+		return ourInstance;
 	}
 
 	public double getCurrentlong() {
