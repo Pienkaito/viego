@@ -1,20 +1,12 @@
 package at.ac.univie.cosy.viego;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
-import android.widget.Spinner;
-
-
-import static android.app.PendingIntent.getActivity;
 
 
 /**
@@ -57,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
 
 	}
 
-	public boolean onOptionsItemSelected (MenuItem item){
+	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case android.R.id.home:
 				// If we click the back button, we close the activity and return to the previous.

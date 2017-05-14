@@ -45,27 +45,23 @@ import okhttp3.Response;
 public class TourPreviewActivity extends AppCompatActivity
 		implements OnMapReadyCallback {
 
+	public static final String TAG = "Mainmenu Activity Log";
+	public static final String API_CALL_MESSAGE = "API_WikiMESSAGE";
+	public static final int REQUEST_CODE = 123;
 	private static final float minZoomFactor = 15.0f;
 	private static final float maxZoomFactor = 18.0f;
+	int random = (int) (Math.random() * 10);
+	String[] exactWikiArticle = {"St. Stephen's Cathedral, Vienna", "Karlsplatz", "Volkstheater,_Vienna",
+			"Gasometer,_Vienna", "TU_Wien", "Wiener_Riesenrad", "Albertina", "Natural_History_Museum,_Vienna",
+			"Austrian_National_Library", "Wotruba_Church"};
+	String url = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles="
+			+ exactWikiArticle[random];
 	private GoogleMap gMap;
 	private LatLng curcoord = new LatLng(
 			SingletonPosition.getInstance().getCurrentlat(),
 			SingletonPosition.getInstance().getCurrentlong());
 	private PolylineOptions path;
 	private ArrayList<PlaceInfo> list = null;
-
-	public static final String TAG = "Mainmenu Activity Log";
-	public static final String API_CALL_MESSAGE = "API_WikiMESSAGE";
-	public static final int REQUEST_CODE = 123;
-
-	int random = (int) (Math.random() * 10);
-
-	String[] exactWikiArticle = {"St. Stephen's Cathedral, Vienna", "Karlsplatz", "Volkstheater,_Vienna",
-			"Gasometer,_Vienna", "TU_Wien", "Wiener_Riesenrad", "Albertina", "Natural_History_Museum,_Vienna",
-			"Austrian_National_Library", "Wotruba_Church"};
-
-	String url = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles="
-			+ exactWikiArticle[random];
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -213,10 +209,12 @@ public class TourPreviewActivity extends AppCompatActivity
 		 * Wird aufgerufen, bevor der Task ausgefuehrt wird. Und setzt den Maximalwert der ProgressBar auf 100.
 		 */
 		@Override
-		protected void onPreExecute() {	}
+		protected void onPreExecute() {
+		}
 
 		/**
 		 * Wird im Hintergrund ausgefuehrt und holt sich die Daten von der API
+		 *
 		 * @param params beinhaltet die url, zu der die Verbindung aufgebaut wird
 		 * @return result als String, der die durch die übertragenen Daten beinhaltet
 		 */
@@ -254,6 +252,7 @@ public class TourPreviewActivity extends AppCompatActivity
 
 		/**
 		 * Wird nachdem Beenden der Methode doInBackground aufgerufen
+		 *
 		 * @param result beinhaltet den String der von der URL uebertragenen Daten
 		 */
 		@Override
