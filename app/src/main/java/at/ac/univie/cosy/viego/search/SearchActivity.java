@@ -70,7 +70,7 @@ public class SearchActivity extends AppCompatActivity {
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			spinner_radius.setAdapter(adapter);
 		} else {
-			type.setText("km");
+			type.setText("meters");
 			ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.radius_array_km, android.R.layout.simple_spinner_item);
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			spinner_radius.setAdapter(adapter);
