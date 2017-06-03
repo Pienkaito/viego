@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 
 /**
@@ -31,6 +32,23 @@ public class SettingsActivity extends AppCompatActivity {
 
 		km.setChecked(prefs.getBoolean("km", true));
 		miles.setChecked(prefs.getBoolean("miles", false));
+
+		final RadioGroup radioGroup = (RadioGroup) findViewById(R.id.settings_radiogroup);
+		radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+		{
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				RadioButton checked = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
+				prefs = getSharedPreferences(settingsTAG, 0);
+				SharedPreferences.Editor editor = prefs.edit();
+
+				editor.putBoolean("km", km.isChecked());
+				editor.putBoolean("miles", miles.isChecked());
+				editor.commit();
+				finish();
+			}
+		});
+		/*
 		Button btnSave = (Button) findViewById(R.id.settings_button_save);
 
 		btnSave.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +64,7 @@ public class SettingsActivity extends AppCompatActivity {
 
 			}
 		});
+		*/
 
 	}
 
