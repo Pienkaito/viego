@@ -28,10 +28,10 @@
 			android:id="@+id/settings_radio_km"
 			android:layout_width="165dp"
 			android:layout_height="wrap_content"
-			android:layout_gravity="center"
-			android:layout_weight="1"
+			android:layout_gravity="center_horizontal"
 			android:text="Kilometer"
-			android:textAlignment="center"
+			android:textAlignment="viewStart"
+			android:textAllCaps="false"
 			android:textSize="30sp"/>
 
 		<RadioButton
