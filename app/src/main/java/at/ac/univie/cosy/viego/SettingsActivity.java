@@ -48,23 +48,6 @@ public class SettingsActivity extends AppCompatActivity {
 				finish();
 			}
 		});
-		/*
-		Button btnSave = (Button) findViewById(R.id.settings_button_save);
-
-		btnSave.setOnClickListener(new View.OnClickListener() {
-
-			public void onClick(View v) {
-				prefs = getSharedPreferences(settingsTAG, 0);
-				SharedPreferences.Editor editor = prefs.edit();
-
-				editor.putBoolean("km", km.isChecked());
-				editor.putBoolean("miles", miles.isChecked());
-				editor.commit();
-				finish();
-
-			}
-		});
-		*/
 
 	}
 
