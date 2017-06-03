@@ -17,11 +17,12 @@
 		android:textStyle="bold"
 		android:visibility="gone"/>
 
-    <ListView
+	<ListView
 		android:id="@+id/search_results"
 		android:layout_width="match_parent"
 		android:layout_height="296dp"
-		android:layout_weight="0.93"/>
+		android:layout_weight="0.93"
+		android:scrollIndicators="right"/>
 
 	<Button
 		android:id="@+id/send_btn"
