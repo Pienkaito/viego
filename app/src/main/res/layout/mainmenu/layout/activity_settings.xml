@@ -7,6 +7,7 @@
 			  android:layout_height="match_parent">
 
 	<RadioGroup
+		android:id="@+id/settings_radiogroup"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="vertical">
@@ -36,13 +37,5 @@
 			tools:layout_editor_absoluteX="8dp"/>
 
 	</RadioGroup>
-
-	<Button
-		android:id="@+id/settings_button_save"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:layout_weight="1"
-		android:text="Save Settings"
-		android:textAlignment="center"/>
 
 </LinearLayout>
