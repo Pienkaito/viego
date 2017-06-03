@@ -126,6 +126,15 @@
 					tools:layout_editor_absoluteY="219dp"/>
 
 				<RadioButton
+					android:id="@+id/radio_art_gallery"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:onClick="onRadioButtonClicked"
+					android:text="@string/radio_art_gallery"
+					tools:layout_editor_absoluteX="171dp"
+					tools:layout_editor_absoluteY="251dp"/>
+
+				<RadioButton
 					android:id="@+id/radio_cafe"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -133,24 +142,6 @@
 					android:text="@string/radio_cafe"
 					tools:layout_editor_absoluteX="171dp"
 					tools:layout_editor_absoluteY="219dp"/>
-
-				<RadioButton
-					android:id="@+id/radio_sight"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:onClick="onRadioButtonClicked"
-					android:text="@string/radio_sight"
-					tools:layout_editor_absoluteX="171dp"
-					tools:layout_editor_absoluteY="187dp"/>
-
-				<RadioButton
-					android:id="@+id/radio_museum"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:onClick="onRadioButtonClicked"
-					android:text="@string/radio_museum"
-					tools:layout_editor_absoluteX="171dp"
-					tools:layout_editor_absoluteY="155dp"/>
 
 				<RadioButton
 					android:id="@+id/radio_church"
@@ -162,13 +153,23 @@
 					tools:layout_editor_absoluteY="219dp"/>
 
 				<RadioButton
-					android:id="@+id/radio_art_gallery"
+					android:id="@+id/radio_museum"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:onClick="onRadioButtonClicked"
-					android:text="@string/radio_art_gallery"
+					android:text="@string/radio_museum"
 					tools:layout_editor_absoluteX="171dp"
-					tools:layout_editor_absoluteY="251dp"/>
+					tools:layout_editor_absoluteY="155dp"/>
+
+				<RadioButton
+					android:id="@+id/radio_sight"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:onClick="onRadioButtonClicked"
+					android:text="@string/radio_sight"
+					tools:layout_editor_absoluteX="171dp"
+					tools:layout_editor_absoluteY="187dp"/>
+
 			</RadioGroup>
 
 
